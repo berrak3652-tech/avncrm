@@ -1,0 +1,433 @@
+=== ALL SHEETS ===
+Sheet names: ['tüm ürünler', 'birim fiyatlar', 'ürün ağaçları', 'ARAS KARGO', 'İşçilik', 'TRENDYOL SATIŞ FİYATLARI']
+
+
+================================================================================
+SHEET: tüm ürünler
+================================================================================
+Shape: (87, 1)
+Columns: ['ÜRÜN LİSTESİ']
+
+Data Types:
+ÜRÜN LİSTESİ    object
+dtype: object
+
+First 30 rows:
+     ÜRÜN LİSTESİ
+0         VIRTUAL
+1          VISION
+2       IMPONENTE
+3            LICH
+4          USE-ME
+5            MAGO
+6           EXITO
+7         PASSION
+8           TORRE
+9       COLECTIVO
+10       ORDENADO
+11         RAPIDO
+12        EMOCION
+13          SABIO
+14         SEGURO
+15         GATITO
+16           CUBO
+17     CUBO İKİLİ
+18           BAJO
+19     BAJO İKİLİ
+20          SILLA
+21      PRIMAVERA
+22        PARILLA
+23   FUERTE TEKLİ
+24   FUERTE İKİLİ
+25    FUERTE ÜÇLÜ
+26  FUERTE DÖRTLÜ
+27      JARDINERO
+28         CALIDO
+29          LINDA
+
+
+All unique values sample:
+  ÜRÜN LİSTESİ: ['VIRTUAL', 'VISION', 'IMPONENTE', 'LICH', 'USE-ME', 'MAGO', 'EXITO', 'PASSION', 'TORRE', 'COLECTIVO', 'ORDENADO', 'RAPIDO', 'EMOCION', 'SABIO', 'SEGURO']
+
+Numeric Statistics:
+
+
+================================================================================
+SHEET: birim fiyatlar
+================================================================================
+Shape: (132, 6)
+Columns: ['kullanıldığı birim', 'malzeme adı', 'birim', 'birim fiyatı KDVSİZ', 'açıklama', 'açıklama 2']
+
+Data Types:
+kullanıldığı birim      object
+malzeme adı             object
+birim                   object
+birim fiyatı KDVSİZ    float64
+açıklama                object
+açıklama 2              object
+dtype: object
+
+First 30 rows:
+   kullanıldığı birim                                    malzeme adı birim  birim fiyatı KDVSİZ açıklama açıklama 2
+0              MONTAJ                                    AHSAP AİLA     TK                220.0      NaN        NaN
+1              MONTAJ               AHSAP CILALI FUERTE KOL ISKELETI    AD                 10.0      NaN        NaN
+2              MONTAJ                      AHSAP CILALI ISKELET GLUM    TK                 75.0      NaN        NaN
+3              MONTAJ           AHSAP CILALI ISKELET BAHÇE 6*55*2 CM    AD                 30.0      NaN        NaN
+4              MONTAJ                     AHSAP CILALI ISKELET POPPY    AD                 50.0      NaN        NaN
+5              MONTAJ                     AHSAP CILALI ISKELET STARK    TK                300.0      NaN        NaN
+6             AMBALAJ  AMBALAJ NAYLON 10 MM PAT PAT 2. KALITE 140 CM    KG                 35.0      NaN        NaN
+7           BEYAZLAMA                                    BALY 15 KG     KG                 55.0      NaN        NaN
+8           METALHANE                             BOYA PARLAK SIYAH     KG                 60.0      NaN        NaN
+9           METALHANE           BOYA TEKSTURE SIYAH 9005 (MK) PE-MAT    KG                 40.0      NaN        NaN
+10          TERZİHANE                     CIRT 20 MM (DİŞİ VE ERKEK)     M                  5.0      NaN        NaN
+11             MONTAJ                            CIVATA M6*15 MM YSB    AD                  1.0      NaN        NaN
+12             MONTAJ                            CIVATA M6*20 MM YSB    AD                  1.0      NaN        NaN
+13             MONTAJ                            CIVATA M6*30 MM YSB    AD                  1.0      NaN        NaN
+14             MONTAJ                            CIVATA M6*35 MM YSB    AD                  1.0      NaN        NaN
+15             MONTAJ                            CIVATA M6*40 MM YSB    AD                  1.0      NaN        NaN
+16             MONTAJ                            CIVATA M6*50 MM YSB    AD                  1.0      NaN        NaN
+17             MONTAJ                            CIVATA M6*60 MM YSB    AD                  1.0      NaN        NaN
+18             MONTAJ                            CIVATA M8*20 MM AKB    AD                  1.5      NaN        NaN
+19             MONTAJ                            CIVATA M8*30 MM AKB    AD                  1.5      NaN        NaN
+20             MONTAJ                            CIVATA M8*40 MM AKB    AD                  1.5      NaN        NaN
+21             MONTAJ                            CIVATA M8*50 MM AKB    AD                  1.5      NaN        NaN
+22             MONTAJ                            CIVATA M8*60 MM AKB    AD                  1.5      NaN        NaN
+23             MONTAJ                            CIVATA M5*15 MM YHB    AD                  1.0      NaN        NaN
+24          METALHANE                            CIVATA M5*30 MM YHB    AD                  1.0      NaN        NaN
+25             MONTAJ                            CIVATA M8*40 MM YHB    AD                  1.5      NaN        NaN
+26             MONTAJ                            CIVATA M8*60 MM YHB    AD                  1.5      NaN        NaN
+27             MONTAJ                            CIVATA M8*70 MM YHB    AD                  1.5      NaN        NaN
+28             MONTAJ                            CIVATA M8*70 MM AKB    AD                  1.5      NaN        NaN
+29             MONTAJ                            CIVATA M8*80 MM AKB    AD                  1.5      NaN        NaN
+
+
+All unique values sample:
+  kullanıldığı birim: ['MONTAJ', 'AMBALAJ', 'BEYAZLAMA', 'METALHANE', 'TERZİHANE', 'İSKELET', 'DÖŞEME', 'METALHANE-MONTAJ', 'METALHANE ']
+  malzeme adı: ['AHSAP AİLA ', 'AHSAP CILALI FUERTE KOL ISKELETI', 'AHSAP CILALI ISKELET GLUM', 'AHSAP CILALI ISKELET BAHÇE 6*55*2 CM', 'AHSAP CILALI ISKELET POPPY', 'AHSAP CILALI ISKELET STARK', 'AMBALAJ NAYLON 10 MM PAT PAT 2. KALITE 140 CM', 'BALY 15 KG ', 'BOYA PARLAK SIYAH ', 'BOYA TEKSTURE SIYAH 9005 (MK) PE-MAT', 'CIRT 20 MM (DİŞİ VE ERKEK)', 'CIVATA M6*15 MM YSB', 'CIVATA M6*20 MM YSB', 'CIVATA M6*30 MM YSB', 'CIVATA M6*35 MM YSB']
+  birim: ['TK', 'AD', 'KG', 'M', 'TBK', 'TOP']
+  birim fiyatı KDVSİZ: [np.float64(220.0), np.float64(10.0), np.float64(75.0), np.float64(30.0), np.float64(50.0), np.float64(300.0), np.float64(35.0), np.float64(55.0), np.float64(60.0), np.float64(40.0), np.float64(5.0), np.float64(1.0), np.float64(1.5), np.float64(0.5), np.float64(2.0)]
+  açıklama: ['1 bobin 50 TL', '1 bobin 70 TL', 'KATLANIR SANDALYE', '1 top 100 metre 18 TL', '100 metresi 200 TL 1 top 30 metre', '1 metresi 1,2 dolar', 'METRE 1,55 DOLAR', '1 TBK 90 adet tabakası 900 TL', 'SET 2,26 EURO', 'mago için', 'trindy', 78, 72, 102, 126]
+  açıklama 2: [0.14, '57,6 CM katlanır sandalye', 'harpy için ', '1 boy fiyatı', 'katlanır sandalye için']
+
+Numeric Statistics:
+       birim fiyatı KDVSİZ
+count           132.000000
+mean             43.193182
+std              98.183241
+min               0.250000
+25%               1.500000
+50%               9.000000
+75%              40.000000
+max             600.000000
+
+
+================================================================================
+SHEET: ürün ağaçları
+================================================================================
+Shape: (1701, 14)
+Columns: ['urun adı', 'modul adı', 'urun modul adı', 'malzeme', 'metal olcu (cm)', 'fireli metal olcu (cm)', 'kumas olcu (m)', 'fireli kumas olcu (m)', 'urun agacı miktarı', 'urun agacı birimi', 'miktar', 'satın alma birimi', 'birim fiyat', 'toplam fiyat']
+
+Data Types:
+urun adı                   object
+modul adı                  object
+urun modul adı             object
+malzeme                    object
+metal olcu (cm)           float64
+fireli metal olcu (cm)    float64
+kumas olcu (m)            float64
+fireli kumas olcu (m)     float64
+urun agacı miktarı        float64
+urun agacı birimi          object
+miktar                    float64
+satın alma birimi          object
+birim fiyat               float64
+toplam fiyat              float64
+dtype: object
+
+First 30 rows:
+   urun adı       modul adı  urun modul adı                                        malzeme  metal olcu (cm)  fireli metal olcu (cm)  kumas olcu (m)  fireli kumas olcu (m)  urun agacı miktarı urun agacı birimi  miktar satın alma birimi  birim fiyat  toplam fiyat
+0     EXİTO  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 20*20*1 MM             73.0                  0.7665             NaN                    NaN                 4.0                AD   3.066                 M         18.0        55.188
+1     EXİTO  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 20*20*1 MM             52.0                  0.5460             NaN                    NaN                 4.0                AD   2.184                 M         18.0        39.312
+2     EXİTO  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 10*20*1 MM            106.0                  1.1130             NaN                    NaN                 2.0                AD   2.226                 M         15.0        33.390
+3     EXİTO  ÇALIŞMA MASASI     METAL GÖVDE           BOYA TEKSTURE SIYAH 9005 (MK) PE-MAT              NaN                     NaN             NaN                    NaN                 NaN               NaN   0.100                KG         40.0         4.000
+4     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                            CIVATA M6*50 MM YSB              NaN                     NaN             NaN                    NaN                 NaN               NaN   4.000                AD          1.0         4.000
+5     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                            CIVATA M6*30 MM YSB              NaN                     NaN             NaN                    NaN                 NaN               NaN   1.000                AD          1.0         1.000
+6     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                               SOMUN KELEBEK M6              NaN                     NaN             NaN                    NaN                 NaN               NaN   5.000                AD          1.5         7.500
+7     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                             VIDA AGAC 4*30 MM               NaN                     NaN             NaN                    NaN                 NaN               NaN   4.000                AD          1.5         6.000
+8     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                   SUNTALAM CEVIZ 600*900*18 MM              NaN                     NaN             NaN                    NaN                 NaN               NaN   1.000                AD        100.0       100.000
+9     EXİTO  ÇALIŞMA MASASI   MONTAJLI URUN                    TAPA SIYAH 20*20 MM İÇ TAPA              NaN                     NaN             NaN                    NaN                 NaN               NaN   4.000                AD          1.0         4.000
+10    EXİTO  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN  AMBALAJ NAYLON 10 MM PAT PAT 2. KALITE 140 CM              NaN                     NaN             NaN                    NaN                 NaN               NaN   0.700                KG         35.0        24.500
+11    EXİTO  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN                                         STRECH              NaN                     NaN             NaN                    NaN                 NaN               NaN   0.050               TOP        150.0         7.500
+12    EXİTO  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN                                          FLEXY              NaN                     NaN             NaN                    NaN                 NaN               NaN   3.000                 M          4.0        12.000
+13    EXİTO  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN                           KOSE KORUMA PLASTİGİ              NaN                     NaN             NaN                    NaN                 NaN               NaN   8.000                AD          0.5         4.000
+14    EXİTO  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN                                     KOLİ BANDI              NaN                     NaN             NaN                    NaN                 NaN               NaN   7.000                 M          0.5         3.500
+15   PASİON  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 20*20*1 MM             73.0                  0.7665             NaN                    NaN                 6.0                AD   4.599                 M         18.0        82.782
+16   PASİON  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 20*20*1 MM             52.0                  0.5460             NaN                    NaN                 8.0                AD   4.368                 M         18.0        78.624
+17   PASİON  ÇALIŞMA MASASI     METAL GÖVDE                        METAL PROFIL 10*20*1 MM            106.0                  1.1130             NaN                    NaN                 2.0                AD   2.226                 M         15.0        33.390
+18   PASİON  ÇALIŞMA MASASI     METAL GÖVDE           BOYA TEKSTURE SIYAH 9005 (MK) PE-MAT              NaN                     NaN             NaN                    NaN                 NaN               NaN   0.150                KG         40.0         6.000
+19   PASİON  ÇALIŞMA MASASI     METAL GÖVDE               METAL LAMA SAC 2 MM TEK DELİKLİ               NaN                     NaN             NaN                    NaN                 NaN               NaN   8.000                AD          2.0        16.000
+20   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                            CIVATA M6*50 MM YSB              NaN                     NaN             NaN                    NaN                 NaN               NaN   4.000                AD          1.0         4.000
+21   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                            CIVATA M6*30 MM YSB              NaN                     NaN             NaN                    NaN                 NaN               NaN   1.000                AD          1.0         1.000
+22   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                               SOMUN KELEBEK M6              NaN                     NaN             NaN                    NaN                 NaN               NaN   5.000                AD          1.5         7.500
+23   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                           VIDA AGAC 3,5*16 MM               NaN                     NaN             NaN                    NaN                 NaN               NaN   8.000                AD          1.0         8.000
+24   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                             VIDA AGAC 4*30 MM               NaN                     NaN             NaN                    NaN                 NaN               NaN   6.000                AD          1.5         9.000
+25   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                  SUNTALAM CEVIZ 600*1200*18 MM              NaN                     NaN             NaN                    NaN                 NaN               NaN   1.000                AD        150.0       150.000
+26   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                   SUNTALAM CEVIZ 300*600*18 MM              NaN                     NaN             NaN                    NaN                 NaN               NaN   2.000                AD         45.0        90.000
+27   PASİON  ÇALIŞMA MASASI   MONTAJLI URUN                    TAPA SIYAH 20*20 MM İÇ TAPA              NaN                     NaN             NaN                    NaN                 NaN               NaN   6.000                AD          1.0         6.000
+28   PASİON  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN  AMBALAJ NAYLON 10 MM PAT PAT 2. KALITE 140 CM              NaN                     NaN             NaN                    NaN                 NaN               NaN   1.000                KG         35.0        35.000
+29   PASİON  ÇALIŞMA MASASI  AMBALAJLI ÜRÜN                                         STRECH              NaN                     NaN             NaN                    NaN                 NaN               NaN   0.050               TOP        150.0         7.500
+
+
+All unique values sample:
+  urun adı: ['EXİTO', 'PASİON', 'ORDENADO', 'COLECTİVO', 'TORRE', 'MAGO', 'GATİTO', 'CUBO', 'SEGURO', 'BAJO', 'SİLLA', 'SABİO', 'EMOTİON', 'RAPİDO', 'VİRTUAL ']
+  modul adı: ['ÇALIŞMA MASASI', 'ÇALIŞMA MASASI 6 RAFLI', 'ÇALIŞMA MASASI 5 RAFLI', 'ÇALIŞMA MASASI 4 RAFLI', 'KATLANIR ÇALIŞMA MASASI', 'YEMEK MASA TAKIMI 2 KİŞİLİK', 'TABURE', 'OTURAK', 'KİTAPLIK 6 RAFLI', 'KİTAPLIK 5 RAFLI', 'KİTAPLIK 4 RAFLI', 'TV SEHPASI', 'TV ÜNİTESİ', 'TV ÜNİTESİ 5 RAFLI ÇİFT', 'TV ÜNİTESİ 4 RAFLI ÇİFT']
+  urun modul adı: ['METAL GÖVDE', 'MONTAJLI URUN', 'AMBALAJLI ÜRÜN', 'METAL GÖVDE TV MASASI', 'MONTAJLI URUN TV MASASI', 'METAL GÖVDE MASA', 'MONTAJLI URUN MASA', 'METAL GÖVDE TABURE 2 ADET', 'MONTAJLI URUN TABURE 2 ADET', 'METAL GÖVDE ', 'METAL GOVDE ISKELET', 'METAL KOL İSKELET', 'METAL SIRT ISKELET', 'METAL AYAK İSKELET SVAN', 'DOSELI OTURUM MINDERI']
+  malzeme: ['METAL PROFIL 20*20*1 MM', 'METAL PROFIL 10*20*1 MM', 'BOYA TEKSTURE SIYAH 9005 (MK) PE-MAT', 'CIVATA M6*50 MM YSB', 'CIVATA M6*30 MM YSB', 'SOMUN KELEBEK M6', 'VIDA AGAC 4*30 MM ', 'SUNTALAM CEVIZ 600*900*18 MM', 'TAPA SIYAH 20*20 MM İÇ TAPA', 'AMBALAJ NAYLON 10 MM PAT PAT 2. KALITE 140 CM', 'STRECH', 'FLEXY', 'KOSE KORUMA PLASTİGİ', 'KOLİ BANDI', 'METAL LAMA SAC 2 MM TEK DELİKLİ ']
+  metal olcu (cm): [np.float64(73.0), np.float64(52.0), np.float64(106.0), np.float64(183.0), np.float64(26.0), np.float64(179.0), np.float64(34.0), np.float64(147.0), np.float64(146.0), np.float64(111.0), np.float64(111.5), np.float64(11.0), np.float64(115.0), np.float64(30.0), np.float64(94.0)]
+  fireli metal olcu (cm): [np.float64(0.7665000000000001), np.float64(0.546), np.float64(1.1130000000000002), np.float64(1.9215), np.float64(0.273), np.float64(1.8795000000000002), np.float64(0.35700000000000004), np.float64(1.5434999999999999), np.float64(1.5330000000000001), np.float64(1.1655000000000002), np.float64(1.17075), np.float64(0.1155), np.float64(1.2075), np.float64(0.315), np.float64(0.987)]
+  kumas olcu (m): [np.float64(1.1), np.float64(1.2), np.float64(1.0), np.float64(3.0), np.float64(1.5), np.float64(5.5), np.float64(2.0), np.float64(6.0), np.float64(4.0), np.float64(2.8), np.float64(1.7), np.float64(0.4), np.float64(0.7), np.float64(2.5), np.float64(9.0)]
+  fireli kumas olcu (m): [np.float64(1.1330000000000002), np.float64(1.236), np.float64(1.03), np.float64(3.09), np.float64(1.545), np.float64(5.665), np.float64(2.06), np.float64(6.18), np.float64(4.12), np.float64(2.884), np.float64(1.751), np.float64(0.41200000000000003), np.float64(0.721), np.float64(2.575), np.float64(9.27)]
+  urun agacı miktarı: [np.float64(4.0), np.float64(2.0), np.float64(6.0), np.float64(8.0), np.float64(12.0), np.float64(10.0), np.float64(24.0), np.float64(20.0), np.float64(16.0), np.float64(1.0), np.float64(3.0), np.float64(5.0), np.float64(28.0), np.float64(7.0)]
+  urun agacı birimi: ['AD', 'M', 'KG']
+  miktar: [np.float64(3.0660000000000003), np.float64(2.184), np.float64(2.2260000000000004), np.float64(0.1), np.float64(4.0), np.float64(1.0), np.float64(5.0), np.float64(0.7), np.float64(0.05), np.float64(3.0), np.float64(8.0), np.float64(7.0), np.float64(4.599), np.float64(4.368), np.float64(0.15)]
+  satın alma birimi: ['M', 'KG', 'AD', 'TOP', 'TK', 'TBK', 'KJG', 'A0']
+  birim fiyat: [np.float64(18.0), np.float64(15.0), np.float64(40.0), np.float64(1.0), np.float64(1.5), np.float64(100.0), np.float64(35.0), np.float64(150.0), np.float64(4.0), np.float64(0.5), np.float64(2.0), np.float64(45.0), np.float64(30.0), np.float64(60.0), np.float64(6.0)]
+  toplam fiyat: [np.float64(55.188), np.float64(39.312000000000005), np.float64(33.39000000000001), np.float64(4.0), np.float64(1.0), np.float64(7.5), np.float64(6.0), np.float64(100.0), np.float64(24.5), np.float64(12.0), np.float64(3.5), np.float64(82.78200000000001), np.float64(78.62400000000001), np.float64(16.0), np.float64(8.0)]
+
+Numeric Statistics:
+       metal olcu (cm)  fireli metal olcu (cm)  kumas olcu (m)  fireli kumas olcu (m)  urun agacı miktarı       miktar  birim fiyat  toplam fiyat
+count       511.000000              511.000000       49.000000              49.000000          512.000000  1701.000000  1701.000000   1701.000000
+mean         76.211350                0.805697        2.557143               2.633857            3.519531     6.502721    23.550794     31.097958
+std          69.479129                0.734671        1.902849               1.959934            3.221687    20.768929    46.493170     53.515877
+min           2.000000                0.021000        0.400000               0.412000            1.000000     0.000000     0.250000      0.000000
+25%          40.000000                0.420000        1.100000               1.133000            2.000000     0.966000     1.500000      5.906250
+50%          59.000000                0.619500        2.000000               2.060000            2.000000     2.000000    15.000000     15.000000
+75%          96.000000                1.008000        4.000000               4.120000            4.000000     4.120000    30.000000     32.000000
+max         848.000000                8.904000        9.000000               9.270000           28.000000   500.000000   600.000000    560.000000
+
+
+================================================================================
+SHEET: ARAS KARGO
+================================================================================
+Shape: (45, 2)
+Columns: ['DESİ', 'HOROZ']
+
+Data Types:
+DESİ     float64
+HOROZ    float64
+dtype: object
+
+First 30 rows:
+     DESİ    HOROZ
+0     NaN      NaN
+1     NaN      NaN
+2     2.0  282.000
+3     3.0  282.000
+4     4.0  282.000
+5     5.0  282.000
+6     6.0  282.000
+7     8.0  282.000
+8    10.0  282.000
+9    15.0  282.000
+10   18.0  282.000
+11   20.0  282.000
+12   23.0  282.000
+13   25.0  282.000
+14   28.0  282.000
+15   30.0  282.000
+16   35.0  286.272
+17   40.0  327.168
+18   45.0  368.064
+19   50.0  408.960
+20   55.0  449.856
+21   60.0  490.752
+22   65.0  531.648
+23   70.0  572.544
+24   75.0  613.440
+25   80.0  654.336
+26   85.0  695.232
+27   90.0  736.128
+28   95.0  777.024
+29  100.0  817.920
+
+
+All unique values sample:
+  DESİ: [np.float64(2.0), np.float64(3.0), np.float64(4.0), np.float64(5.0), np.float64(6.0), np.float64(8.0), np.float64(10.0), np.float64(15.0), np.float64(18.0), np.float64(20.0), np.float64(23.0), np.float64(25.0), np.float64(28.0), np.float64(30.0), np.float64(35.0)]
+  HOROZ: [np.float64(282.0), np.float64(286.272), np.float64(327.16799999999995), np.float64(368.06399999999996), np.float64(408.96), np.float64(449.856), np.float64(490.75199999999995), np.float64(531.6479999999999), np.float64(572.544), np.float64(613.4399999999999), np.float64(654.3359999999999), np.float64(695.232), np.float64(736.1279999999999), np.float64(777.024), np.float64(817.92)]
+
+Numeric Statistics:
+             DESİ        HOROZ
+count   43.000000    43.000000
+mean    80.279070   710.960372
+std     62.998989   457.711732
+min      2.000000   282.000000
+25%     24.000000   282.000000
+50%     70.000000   572.544000
+75%    127.500000  1042.848000
+max    210.000000  1717.632000
+
+
+================================================================================
+SHEET: İşçilik
+================================================================================
+Shape: (79, 5)
+Columns: ['ürün adı', 'modül adı', 'Bir Kişi Kaç Adet Yapar', 'Saat Ücreti', 'Toplam İşçilik']
+
+Data Types:
+ürün adı                    object
+modül adı                   object
+Bir Kişi Kaç Adet Yapar    float64
+Saat Ücreti                  int64
+Toplam İşçilik             float64
+dtype: object
+
+First 30 rows:
+         ürün adı                                                                                        modül adı  Bir Kişi Kaç Adet Yapar  Saat Ücreti  Toplam İşçilik
+0           EXİTO                                                                            ÇALIŞMA&LAPTOP MASASI                     9.00          110      110.000000
+1         PASSİON                                                                      ÇALIŞMA&LAPTOP MASASI RAFLI                     8.00          110      123.750000
+2        ORDENADO                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 6 RAFLI                     3.00          110      330.000000
+3       COLECTİVO                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 5 RAFLI                     3.00          110      330.000000
+4           TORRE                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 4 RAFLI                     3.00          110      330.000000
+5            MAGO                                                                   ÇALIŞMA&LAPTOP MASASI KATLANIR                     3.00          110      330.000000
+6          GATİTO                                                               BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK                     5.00          110      198.000000
+7            CUBO                                                                                           TABURE                    15.00          110       66.000000
+8      CUBO İKİLİ                                                                                           TABURE                     7.00          110      141.428571
+9          SEGURO                                                               BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK                     5.00          110      198.000000
+10           BAJO                                                                                           OTURAK                     8.00          110      123.750000
+11     BAJO İKİLİ                                                                                           OTURAK                     4.00          110      247.500000
+12          SİLLA                                                                                           OTURAK                     5.00          110      198.000000
+13          SABİO                                                                                 KİTAPLIK 6 RAFLI                     4.00          110      247.500000
+14        EMOCION                                                                                 KITAPLIK 5 RAFLI                     4.00          110      247.500000
+15         RAPİDO                                                                                 KİTAPLIK 4 RAFLI                     4.00          110      247.500000
+16        VİRTUAL                                                                                       TV SEHPASI                    13.00          110       76.153846
+17         VİSİON                                                                           TV ÜNİTESİ 6 RAFLI TEK                     3.00          110      330.000000
+18          CINCO                                                                           TV ÜNİTESİ 5 RAFLI TEK                     3.00          110      330.000000
+19         CUATRO                                                                           TV ÜNİTESİ 4 RAFLI TEK                     3.00          110      330.000000
+20      İMPONENTE                                                                          TV ÜNİTESİ 6 RAFLI ÇİFT                     2.00          110      495.000000
+21        ALEGRİA                                                                          TV ÜNİTESİ 5 RAFLI ÇİFT                     2.00          110      495.000000
+22        MELLİZO                                                                          TV ÜNİTESİ 4 RAFLI ÇİFT                     2.00          110      495.000000
+23        PARİLLA                                                         PİKNİK KAMP BALKON BAHÇE MASASI 60*80 CM                    25.00          110       39.600000
+24      PRİMAVERA                                                         PİKNİK KAMP BALKON BAHÇE MASASI 45*60 CM                    25.00          110       39.600000
+25   FUERTE TEKLİ                                        Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır                     35.00          110       28.285714
+26   FUERTE İKİLİ                                 2 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır                     17.50          110       56.571429
+27    FUERTE ÜÇLÜ                                 3 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır                     11.67          110       84.832905
+28  FUERTE DÖRTLÜ                                 4 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır                      8.75          110      113.142857
+29      JARDİNERO  Katlanır Masa 60x80 + Katlanır Ahşap Kollu Sandalye Kamp Seti Piknik Balkon Bahçe Takımı 2 Adet                     7.30          110      135.616438
+
+
+All unique values sample:
+  ürün adı: ['EXİTO', 'PASSİON', 'ORDENADO', 'COLECTİVO', 'TORRE', 'MAGO', 'GATİTO', 'CUBO', 'CUBO İKİLİ', 'SEGURO', 'BAJO', 'BAJO İKİLİ', 'SİLLA', 'SABİO', 'EMOCION']
+  modül adı: ['ÇALIŞMA&LAPTOP MASASI', 'ÇALIŞMA&LAPTOP MASASI RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 6 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 5 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 4 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KATLANIR', 'BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK', 'TABURE', 'OTURAK', 'KİTAPLIK 6 RAFLI', 'KITAPLIK 5 RAFLI', 'KİTAPLIK 4 RAFLI', 'TV SEHPASI', 'TV ÜNİTESİ 6 RAFLI TEK', 'TV ÜNİTESİ 5 RAFLI TEK']
+  Bir Kişi Kaç Adet Yapar: [np.float64(9.0), np.float64(8.0), np.float64(3.0), np.float64(5.0), np.float64(15.0), np.float64(7.0), np.float64(4.0), np.float64(13.0), np.float64(2.0), np.float64(25.0), np.float64(35.0), np.float64(17.5), np.float64(11.67), np.float64(8.75), np.float64(7.3)]
+  Saat Ücreti: [np.int64(110)]
+  Toplam İşçilik: [np.float64(110.0), np.float64(123.75), np.float64(330.0), np.float64(198.0), np.float64(66.0), np.float64(141.42857142857144), np.float64(247.5), np.float64(76.15384615384615), np.float64(495.0), np.float64(39.6), np.float64(28.285714285714285), np.float64(56.57142857142857), np.float64(84.83290488431876), np.float64(113.14285714285714), np.float64(135.6164383561644)]
+
+Numeric Statistics:
+       Bir Kişi Kaç Adet Yapar  Saat Ücreti  Toplam İşçilik
+count                79.000000         79.0       79.000000
+mean                  6.837278        110.0      284.942180
+std                   7.833885          0.0      223.289956
+min                   1.000000        110.0       19.800000
+25%                   2.750000        110.0      135.616438
+50%                   5.000000        110.0      198.000000
+75%                   7.300000        110.0      363.000000
+max                  50.000000        110.0      990.000000
+
+
+================================================================================
+SHEET: TRENDYOL SATIŞ FİYATLARI
+================================================================================
+Shape: (79, 19)
+Columns: ['ürün adı', 'modül adı', 'Ürün Desi', 'Malzeme', 'İşçilik', 'Genel Gider', 'İade', 'toplam maliyet', 'HOROZ LOJİSTİK CARİ', 'komisyon\n(%18)', 'vergi farkı', 'Kâr Yüzdesi', 'Kâr', 'satış fiyatı', 'ELDEN SATIŞ FİYATI KARGO DAHİL', 'VIVENSE', '\nHEPSİBURADA\nÇİÇEKSEPETİ\nN11', 'BERTACONCEPT.COM', 'KOÇTAŞ']
+
+Data Types:
+ürün adı                            object
+modül adı                           object
+Ürün Desi                            int64
+Malzeme                            float64
+İşçilik                            float64
+Genel Gider                        float64
+İade                               float64
+toplam maliyet                     float64
+HOROZ LOJİSTİK CARİ                float64
+komisyon\n(%18)                    float64
+vergi farkı                        float64
+Kâr Yüzdesi                        float64
+Kâr                                float64
+satış fiyatı                         int64
+ELDEN SATIŞ FİYATI KARGO DAHİL     float64
+VIVENSE                            float64
+\nHEPSİBURADA\nÇİÇEKSEPETİ\nN11    float64
+BERTACONCEPT.COM                   float64
+KOÇTAŞ                             float64
+dtype: object
+
+First 30 rows:
+         ürün adı                                                                                        modül adı  Ürün Desi     Malzeme     İşçilik  Genel Gider     İade  toplam maliyet  HOROZ LOJİSTİK CARİ  komisyon\n(%18)  vergi farkı  Kâr Yüzdesi          Kâr  satış fiyatı  ELDEN SATIŞ FİYATI KARGO DAHİL  VIVENSE  \nHEPSİBURADA\nÇİÇEKSEPETİ\nN11  BERTACONCEPT.COM   KOÇTAŞ
+0           EXİTO                                                                            ÇALIŞMA&LAPTOP MASASI         15   305.89000  110.000000          0.0  28.2000      444.090000              282.000            0.000     -56.4000          NaN  -669.690000             0                             NaN      0.0                              0.0             0.000     0.00
+1         PASSİON                                                                      ÇALIŞMA&LAPTOP MASASI RAFLI         20   558.79600  123.750000         69.5  28.2000      780.246000              282.000          253.536      31.8928     0.030450    42.325200          1390                             NaN   1251.0                           1529.0          1294.785  1483.13
+2        ORDENADO                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 6 RAFLI         30   975.40600  330.000000        124.5  28.2000     1458.106000              282.000          454.176     101.7648     0.077893   193.953200          2490                             NaN   2241.0                           2739.0          2319.435  2656.83
+3       COLECTİVO                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 5 RAFLI         25   854.75400  330.000000        119.5  28.2000     1332.454000              282.000          435.936      95.4128     0.102175   244.197200          2390                             NaN   2151.0                           2629.0          2226.285  2550.13
+4           TORRE                                                         ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 4 RAFLI         20   731.12950  330.000000        114.5  28.2000     1203.829500              282.000          417.696      89.0608     0.129875   297.413700          2290                             NaN   2061.0                           2519.0          2133.135  2443.43
+5            MAGO                                                                   ÇALIŞMA&LAPTOP MASASI KATLANIR         40   691.78400  330.000000         99.5  32.7168     1154.000800              327.168          362.976      60.9712     0.042655    84.884000          1990                             NaN   1791.0                           2189.0          1853.685  2123.33
+6          GATİTO                                                               BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK         15   511.25800  198.000000         79.5  28.2000      816.958000              282.000          290.016      44.5968     0.098383   156.429200          1590                             NaN   1431.0                           1749.0          1481.085  1696.53
+7            CUBO                                                                                           TABURE          3   127.41000   66.000000         34.5  28.2000      256.110000              282.000          125.856     -12.5712     0.055950    38.605200           690                             NaN    621.0                            759.0           642.735   736.23
+8      CUBO İKİLİ                                                                                           TABURE          6   166.00000  141.428571         59.5  28.2000      395.128571              282.000          217.056      19.1888     0.232459   276.626629          1190                             NaN   1071.0                           1309.0          1108.485  1269.73
+9          SEGURO                                                               BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK         20   662.38200  198.000000         87.0  28.2000      975.582000              282.000          317.376      54.1248     0.063746   110.917200          1740                             NaN   1566.0                           1914.0          1620.810  1856.58
+10           BAJO                                                                                           OTURAK         10   217.82200  123.750000         49.5  28.2000      419.272000              282.000          180.576       6.4848     0.102694   101.667200           990                             NaN    891.0                           1089.0           922.185  1056.33
+11     BAJO İKİLİ                                                                                           OTURAK         20   274.00000  247.500000         74.5  28.2000      624.200000              282.000          271.776      38.2448     0.183744   273.779200          1490                             NaN   1341.0                           1639.0          1387.935  1589.83
+12          SİLLA                                                                                           OTURAK         10   226.77200  198.000000         49.5  28.2000      502.472000              282.000          180.576       6.4848     0.018654    18.467200           990                             NaN    891.0                           1089.0           922.185  1056.33
+13          SABİO                                                                                 KİTAPLIK 6 RAFLI         25   707.93100  247.500000         94.5  28.2000     1078.131000              282.000          344.736      63.6528     0.064275   121.480200          1890                             NaN   1701.0                           2079.0          1760.535  2016.63
+14        EMOCION                                                                                 KITAPLIK 5 RAFLI         20   603.11400  247.500000         89.5  28.2000      968.314000              282.000          326.496      57.3008     0.087089   155.889200          1790                             NaN   1611.0                           1969.0          1667.385  1909.93
+15         RAPİDO                                                                                 KİTAPLIK 4 RAFLI         20   505.85700  247.500000         84.5  28.2000      866.057000              282.000          308.256      50.9488     0.108129   182.738200          1690                             NaN   1521.0                           1859.0          1574.235  1803.23
+16        VİRTUAL                                                                                       TV SEHPASI         15   325.30200   76.153846         50.0  28.2000      479.655846              282.000          182.400       7.1200     0.048824    48.824154          1000                             NaN    900.0                           1100.0           931.500  1067.00
+17         VİSİON                                                                           TV ÜNİTESİ 6 RAFLI TEK          4  1027.29500  330.000000        149.5  28.2000     1534.995000              282.000          545.376     133.5248     0.165252   494.104200          2990                             NaN   2691.0                           3289.0          2785.185  3190.33
+18          CINCO                                                                           TV ÜNİTESİ 5 RAFLI TEK         20   925.97800  330.000000         50.0  28.2000     1334.178000              282.000          182.400       7.1200    -0.805698  -805.698000          1000                             NaN    900.0                           1100.0           931.500  1067.00
+19         CUATRO                                                                           TV ÜNİTESİ 4 RAFLI TEK         30   808.35350  330.000000         50.0  28.2000     1216.553500              282.000          182.400       7.1200    -0.688074  -688.073500          1000                             NaN    900.0                           1100.0           931.500  1067.00
+20      İMPONENTE                                                                          TV ÜNİTESİ 6 RAFLI ÇİFT         40  1691.91400  495.000000        199.5  32.7168     2419.130800              327.168          727.776     188.0112     0.082184   327.914000          3990                             NaN   3591.0                           4389.0          3716.685  4257.33
+21        ALEGRİA                                                                          TV ÜNİTESİ 5 RAFLI ÇİFT         35  1464.28000  495.000000         50.0  28.6272     2037.907200              286.272          182.400       6.2656    -1.512845 -1512.844800          1000                             NaN    900.0                           1100.0           931.500  1067.00
+22        MELLİZO                                                                          TV ÜNİTESİ 4 RAFLI ÇİFT         30  1229.53100  495.000000         50.0  28.2000     1802.731000              282.000          182.400       7.1200    -1.274251 -1274.251000          1000                             NaN    900.0                           1100.0           931.500  1067.00
+23        PARİLLA                                                         PİKNİK KAMP BALKON BAHÇE MASASI 60*80 CM         10   183.50975   39.600000         50.0  28.2000      301.309750              282.000          182.400       7.1200     0.227170   227.170250          1000                             NaN    900.0                           1100.0           931.500  1067.00
+24      PRİMAVERA                                                         PİKNİK KAMP BALKON BAHÇE MASASI 45*60 CM          5   116.28625   39.600000         50.0  28.2000      234.086250              282.000          182.400       7.1200     0.294394   294.393750          1000                             NaN    900.0                           1100.0           931.500  1067.00
+25   FUERTE TEKLİ                                        Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır           5   140.78780   28.285714         50.0  28.2000      247.273514              282.000          182.400       7.1200     0.281206   281.206486          1000                             NaN    900.0                           1100.0           931.500  1067.00
+26   FUERTE İKİLİ                                 2 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır          10   281.57560   56.571429         50.0  28.2000      416.347029              282.000          182.400       7.1200     0.112133   112.132971          1000                             NaN    900.0                           1100.0           931.500  1067.00
+27    FUERTE ÜÇLÜ                                 3 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır          15   422.36340   84.832905         50.0  28.2000      585.396305              282.000          182.400       7.1200    -0.056916   -56.916305          1000                             NaN    900.0                           1100.0           931.500  1067.00
+28  FUERTE DÖRTLÜ                                 4 Adet Ahşap Kollu Kamp Piknik Bahçe Balkon Sandalyesi Katlanır          20   563.15120  113.142857         50.0  28.2000      754.494057              282.000          182.400       7.1200    -0.226014  -226.014057          1000                             NaN    900.0                           1100.0           931.500  1067.00
+29      JARDİNERO  Katlanır Masa 60x80 + Katlanır Ahşap Kollu Sandalye Kamp Seti Piknik Balkon Bahçe Takımı 2 Adet         20   465.08535  135.616438         50.0  28.2000      678.901788              282.000          182.400       7.1200    -0.150422  -150.421788          1000                             NaN    900.0                           1100.0           931.500  1067.00
+
+
+All unique values sample:
+  ürün adı: ['EXİTO', 'PASSİON', 'ORDENADO', 'COLECTİVO', 'TORRE', 'MAGO', 'GATİTO', 'CUBO', 'CUBO İKİLİ', 'SEGURO', 'BAJO', 'BAJO İKİLİ', 'SİLLA', 'SABİO', 'EMOCION']
+  modül adı: ['ÇALIŞMA&LAPTOP MASASI', 'ÇALIŞMA&LAPTOP MASASI RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 6 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 5 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KİTAPLIKLI 4 RAFLI', 'ÇALIŞMA&LAPTOP MASASI KATLANIR', 'BAHÇE&BALKON MASA TAKIMI 2 KİŞİLİK', 'TABURE', 'OTURAK', 'KİTAPLIK 6 RAFLI', 'KITAPLIK 5 RAFLI', 'KİTAPLIK 4 RAFLI', 'TV SEHPASI', 'TV ÜNİTESİ 6 RAFLI TEK', 'TV ÜNİTESİ 5 RAFLI TEK']
+  Ürün Desi: [np.int64(15), np.int64(20), np.int64(30), np.int64(25), np.int64(40), np.int64(3), np.int64(6), np.int64(10), np.int64(4), np.int64(35), np.int64(5), np.int64(2), np.int64(60), np.int64(85), np.int64(70)]
+  Malzeme: [np.float64(305.89), np.float64(558.796), np.float64(975.406), np.float64(854.754), np.float64(731.1295), np.float64(691.784), np.float64(511.258), np.float64(127.41), np.float64(166.0), np.float64(662.382), np.float64(217.822), np.float64(274.0), np.float64(226.772), np.float64(707.931), np.float64(603.114)]
+  İşçilik: [np.float64(110.0), np.float64(123.75), np.float64(330.0), np.float64(198.0), np.float64(66.0), np.float64(141.42857142857144), np.float64(247.5), np.float64(76.15384615384615), np.float64(495.0), np.float64(39.6), np.float64(28.285714285714285), np.float64(56.57142857142857), np.float64(84.83290488431876), np.float64(113.14285714285714), np.float64(135.6164383561644)]
+  Genel Gider: [np.float64(0.0), np.float64(69.5), np.float64(124.5), np.float64(119.5), np.float64(114.5), np.float64(99.5), np.float64(79.5), np.float64(34.5), np.float64(59.5), np.float64(87.0), np.float64(49.5), np.float64(74.5), np.float64(94.5), np.float64(89.5), np.float64(84.5)]
+  İade: [np.float64(28.200000000000003), np.float64(32.7168), np.float64(28.627200000000002), np.float64(49.075199999999995), np.float64(69.5232), np.float64(57.254400000000004), np.float64(73.6128), np.float64(106.32959999999999), np.float64(89.97120000000001), np.float64(65.4336), np.float64(40.896), np.float64(147.2256), np.float64(122.68799999999999), np.float64(139.0464), np.float64(13.6)]
+  toplam maliyet: [np.float64(444.09), np.float64(780.2460000000001), np.float64(1458.106), np.float64(1332.454), np.float64(1203.8295), np.float64(1154.0008), np.float64(816.9580000000001), np.float64(256.11), np.float64(395.128571428571), np.float64(975.582), np.float64(419.272), np.float64(624.2), np.float64(502.472), np.float64(1078.131), np.float64(968.3140000000001)]
+  HOROZ LOJİSTİK CARİ: [np.float64(282.0), np.float64(327.16799999999995), np.float64(286.272), np.float64(490.75199999999995), np.float64(695.232), np.float64(572.544), np.float64(736.1279999999999), np.float64(1063.2959999999998), np.float64(899.712), np.float64(654.3359999999999), np.float64(408.96), np.float64(1472.2559999999999), np.float64(1226.8799999999999), np.float64(1390.464), np.float64(85.0)]
+  komisyon
+(%18): [np.float64(0.0), np.float64(253.536), np.float64(454.17600000000004), np.float64(435.93600000000004), np.float64(417.696), np.float64(362.976), np.float64(290.016), np.float64(125.85600000000001), np.float64(217.056), np.float64(317.37600000000003), np.float64(180.576), np.float64(271.776), np.float64(344.736), np.float64(326.49600000000004), np.float64(308.25600000000003)]
+  vergi farkı: [np.float64(-56.4), np.float64(31.892799999999994), np.float64(101.76480000000001), np.float64(95.4128), np.float64(89.0608), np.float64(60.97120000000001), np.float64(44.5968), np.float64(-12.571200000000005), np.float64(19.1888), np.float64(54.12479999999999), np.float64(6.484800000000007), np.float64(38.2448), np.float64(63.6528), np.float64(57.300799999999995), np.float64(50.948800000000006)]
+  Kâr Yüzdesi: [np.float64(0.030449784172661705), np.float64(0.07789285140562247), np.float64(0.1021745606694561), np.float64(0.1298749781659388), np.float64(0.04265527638190956), np.float64(0.09838314465408793), np.float64(0.05594956521739126), np.float64(0.23245935174069665), np.float64(0.06374551724137936), np.float64(0.10269414141414152), np.float64(0.18374442953020131), np.float64(0.018653737373737423), np.float64(0.06427523809523795), np.float64(0.08708893854748595), np.float64(0.10812911242603537)]
+  Kâr: [np.float64(-669.6899999999999), np.float64(42.32519999999977), np.float64(193.95319999999992), np.float64(244.19720000000007), np.float64(297.41370000000006), np.float64(84.88400000000001), np.float64(156.4291999999998), np.float64(38.60519999999997), np.float64(276.6266285714289), np.float64(110.91719999999987), np.float64(101.66719999999998), np.float64(273.77919999999995), np.float64(18.467200000000048), np.float64(121.48019999999997), np.float64(155.88919999999985)]
+  satış fiyatı: [np.int64(0), np.int64(1390), np.int64(2490), np.int64(2390), np.int64(2290), np.int64(1990), np.int64(1590), np.int64(690), np.int64(1190), np.int64(1740), np.int64(990), np.int64(1490), np.int64(1890), np.int64(1790), np.int64(1690)]
+  ELDEN SATIŞ FİYATI KARGO DAHİL: [np.float64(12.0)]
+  VIVENSE: [np.float64(0.0), np.float64(1251.0), np.float64(2241.0), np.float64(2151.0), np.float64(2061.0), np.float64(1791.0), np.float64(1431.0), np.float64(621.0), np.float64(1071.0), np.float64(1566.0), np.float64(891.0), np.float64(1341.0), np.float64(1701.0), np.float64(1611.0), np.float64(1521.0)]
+  
+HEPSİBURADA
+ÇİÇEKSEPETİ
+N11: [np.float64(0.0), np.float64(1529.0000000000002), np.float64(2739.0), np.float64(2629.0), np.float64(2519.0), np.float64(2189.0), np.float64(1749.0000000000002), np.float64(759.0000000000001), np.float64(1309.0), np.float64(1914.0000000000002), np.float64(1089.0), np.float64(1639.0000000000002), np.float64(2079.0), np.float64(1969.0000000000002), np.float64(1859.0000000000002)]
+  BERTACONCEPT.COM: [np.float64(0.0), np.float64(1294.7849999999999), np.float64(2319.435), np.float64(2226.285), np.float64(2133.1349999999998), np.float64(1853.685), np.float64(1481.0849999999998), np.float64(642.7349999999999), np.float64(1108.485), np.float64(1620.81), np.float64(922.185), np.float64(1387.935), np.float64(1760.5349999999999), np.float64(1667.3849999999998), np.float64(1574.235)]
+  KOÇTAŞ: [np.float64(0.0), np.float64(1483.13), np.float64(2656.83), np.float64(2550.13), np.float64(2443.43), np.float64(2123.33), np.float64(1696.53), np.float64(736.23), np.float64(1269.73), np.float64(1856.58), np.float64(1056.33), np.float64(1589.83), np.float64(2016.63), np.float64(1909.93), np.float64(1803.23)]
+
+Numeric Statistics:
+        Ürün Desi      Malzeme     İşçilik  Genel Gider        İade  toplam maliyet  HOROZ LOJİSTİK CARİ  komisyon\n(%18)  vergi farkı  Kâr Yüzdesi          Kâr  satış fiyatı  ELDEN SATIŞ FİYATI KARGO DAHİL      VIVENSE  \nHEPSİBURADA\nÇİÇEKSEPETİ\nN11  BERTACONCEPT.COM       KOÇTAŞ
+count   79.000000    79.000000   79.000000    79.000000   79.000000       79.000000            79.000000        79.000000    79.000000    78.000000    79.000000     79.000000                             1.0    79.000000                        79.000000         79.000000    78.000000
+mean    51.139241   834.005715  259.599458   114.356962   49.248470     1257.210605           497.429975       417.825296    46.019832    -0.007140    72.223153   2290.708861                            12.0  2061.033296                      2535.834177       2133.169462  2477.615038
+std     49.001239   582.696415  200.347765    77.450596   34.476271      839.979715           342.835096       283.313362    50.460031     0.317368   378.297637   1553.253081                             NaN  1398.446920                      1715.390386       1447.392562  1667.063389
+min      2.000000    37.188400   19.800000     0.000000   13.600000      135.188400            85.000000         0.000000   -56.400000    -1.512845 -1512.844800      0.000000                            12.0     0.000000                         0.000000          0.000000     0.000000
+25%     15.000000   410.112625  125.000000    50.000000   28.200000      604.480844           282.000000       182.400000     7.120000     0.009689    16.248700   1000.000000                            12.0   900.000000                      1100.000000        931.500000  1067.000000
+50%     30.000000   731.129500  198.000000    94.500000   28.200000     1078.131000           282.000000       326.496000    38.244800     0.066863   156.429200   1790.000000                            12.0  1611.000000                      1969.000000       1667.385000  1963.280000
+75%     80.000000  1109.634125  330.000000   147.000000   65.433600     1712.744050           654.336000       545.376000    68.585600     0.124744   279.600568   2990.000000                            12.0  2691.000000                      3509.000000       2785.185000  3510.430000
+max    200.000000  3004.883500  990.000000   350.000000  163.584000     3970.929900          1635.840000      1220.256000   188.011200     0.393292   644.731300   6690.000000                            12.0  6021.000000                      7359.000000       6231.735000  7138.230000
