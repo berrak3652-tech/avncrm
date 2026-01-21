@@ -21,7 +21,10 @@ interface ProductsPageProps {
     products: any[];
     onUpdateProduct?: (product: any) => void;
     onDeleteProduct?: (id: string) => void;
+    onSyncToSite?: (product: any) => void;
 }
+
+import { Globe } from 'lucide-react';
 
 const categories = [
     'Tümü',
@@ -35,7 +38,7 @@ const categories = [
     'Diğer'
 ];
 
-export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdateProduct, onDeleteProduct }) => {
+export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdateProduct, onDeleteProduct, onSyncToSite }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Tümü');
     const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
@@ -205,6 +208,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                                                 onClick={() => { setSelectedProduct(product); setShowModal(true); }}
                                             >
                                                 <Eye size={16} />
+                                            </button>
+                                            <button
+                                                className="btn btn-ghost btn-icon"
+                                                title="Web Sitesine Gönder"
+                                                style={{ color: 'var(--primary-400)' }}
+                                                onClick={() => onSyncToSite && onSyncToSite(product)}
+                                            >
+                                                <Globe size={16} />
                                             </button>
                                             <button className="btn btn-ghost btn-icon">
                                                 <Edit2 size={16} />

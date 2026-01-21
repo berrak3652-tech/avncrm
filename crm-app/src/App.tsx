@@ -275,6 +275,37 @@ function App() {
     }
   };
 
+  const handleSyncProductToSite = async (product: any) => {
+    try {
+      const siteProduct = {
+        id: product.id,
+        name: product.name,
+        price: product.salePrice,
+        category: product.category,
+        description: `${product.moduleName} - Avyna Concept`,
+        stock: product.stock,
+        modelurl: '',
+        dimensions: { desi: product.desi },
+        images: []
+      };
+
+      // Try to find if product exists on site
+      const existingProducts = await siteDb.getProducts();
+      const existing = existingProducts.find((p: any) => p.id === product.id || p.name === product.name);
+
+      if (existing) {
+        await siteDb.updateProduct(existing.id, siteProduct);
+        alert(`${product.name} web sitesinde başarıyla güncellendi.`);
+      } else {
+        await siteDb.createProduct(siteProduct);
+        alert(`${product.name} web sitesine yeni ürün olarak eklendi.`);
+      }
+    } catch (error) {
+      console.error('Product sync error:', error);
+      alert('Ürün senkronize edilirken bir hata oluştu.');
+    }
+  };
+
   if (loading) {
     return (
       <div style={{
@@ -323,7 +354,12 @@ function App() {
           />
           <Route
             path="/products"
-            element={<ProductsPage products={products} />}
+            element={
+              <ProductsPage
+                products={products}
+                onSyncToSite={handleSyncProductToSite}
+              />
+            }
           />
           <Route
             path="/orders"
