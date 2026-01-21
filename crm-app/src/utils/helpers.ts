@@ -95,7 +95,7 @@ export const getChannelName = (channel: SalesChannel): string => {
         n11: 'N11',
         ciceksepeti: 'Çiçeksepeti',
         vivense: 'Vivense',
-        bertaconcept: 'ÇınarConcept',
+        bertaconcept: 'AvynaConcept',
         koctas: 'Koçtaş',
         website: 'Web Sitesi',
         direct: 'Direkt Satış'
