@@ -68,7 +68,7 @@ const CompanySettings: React.FC = () => (
         <div className="grid grid-2" style={{ gap: '1rem', marginBottom: '1.5rem' }}>
             <div className="form-group">
                 <label className="form-label">Şirket Adı</label>
-                <input type="text" className="form-input" defaultValue="Berta Concept" />
+                <input type="text" className="form-input" defaultValue="Çınar Concept" />
             </div>
             <div className="form-group">
                 <label className="form-label">Vergi No</label>
@@ -88,7 +88,7 @@ const CompanySettings: React.FC = () => (
             </div>
             <div className="form-group">
                 <label className="form-label">Email</label>
-                <input type="email" className="form-input" defaultValue="info@bertaconcept.com" />
+                <input type="email" className="form-input" defaultValue="info@cinarconcept.com" />
             </div>
         </div>
 

@@ -78,8 +78,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="sidebar-logo">
-                        <div className="logo-icon">B</div>
-                        <span className="logo-text">Berta CRM</span>
+                        <div className="logo-icon">Ç</div>
+                        <span className="logo-text">Çınar CRM</span>
                     </div>
                 </div>
 

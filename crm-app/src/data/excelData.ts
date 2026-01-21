@@ -6,7 +6,7 @@ export const SALES_CHANNELS = [
     { id: 'n11', name: 'N11', commission: 18, color: '#7B68EE' },
     { id: 'ciceksepeti', name: 'Çiçeksepeti', commission: 18, color: '#FF69B4' },
     { id: 'vivense', name: 'Vivense', commission: 10, color: '#2D5A27' },
-    { id: 'bertaconcept', name: 'BertaConcept', commission: 7, color: '#1E3A5F' },
+    { id: 'bertaconcept', name: 'ÇınarConcept', commission: 7, color: '#1E3A5F' },
     { id: 'koctas', name: 'Koçtaş', commission: 7, color: '#E31E24' },
     { id: 'website', name: 'Web Sitesi', commission: 0, color: '#4A90D9' },
     { id: 'direct', name: 'Direkt Satış', commission: 0, color: '#27AE60' },
