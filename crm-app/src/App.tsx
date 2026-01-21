@@ -11,6 +11,7 @@ import { LaborPage } from './pages/LaborPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { ChannelsPage } from './pages/ChannelsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { BOMPage } from './pages/BOMPage';
 import { db } from './lib/supabase';
 import {
   convertToProducts,
@@ -248,6 +249,10 @@ function App() {
           <Route
             path="/labor"
             element={<LaborPage laborData={laborData} />}
+          />
+          <Route
+            path="/bom"
+            element={<BOMPage products={products} />}
           />
           <Route
             path="/reports"

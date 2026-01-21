@@ -39,6 +39,7 @@ const navItems = [
         section: 'Maliyet & Fiyat',
         items: [
             { path: '/materials', icon: Wrench, label: 'Malzemeler', badge: null },
+            { path: '/bom', icon: FileText, label: 'Ürün Reçeteleri', badge: null },
             { path: '/labor', icon: Calculator, label: 'İşçilik', badge: null },
             { path: '/cargo', icon: Truck, label: 'Kargo Fiyatları', badge: null },
         ]
