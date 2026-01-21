@@ -13,6 +13,7 @@ import { ChannelsPage } from './pages/ChannelsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { BOMPage } from './pages/BOMPage';
 import { db } from './lib/supabase';
+import { siteDb } from './lib/siteSupabase';
 import {
   convertToProducts,
   convertToMaterials,
@@ -175,6 +176,105 @@ function App() {
     }
   };
 
+  const handleSyncSiteOrders = async () => {
+    try {
+      const siteOrders = await siteDb.getOrders();
+      if (!siteOrders || siteOrders.length === 0) return;
+
+      const newOrders = siteOrders.map((so: any) => {
+        // Find or create customer (skipping for now, just mapping names)
+        const products = so.order_items.map((item: any) => ({
+          productId: item.product_id,
+          productName: item.product_name || 'Web Ürünü', // We might need to fetch names if missing
+          quantity: item.quantity,
+          unitPrice: item.price,
+          unitCost: 0, // Site doesn't have cost, we might need to map from our products
+          totalPrice: item.price * item.quantity,
+          totalCost: 0
+        }));
+
+        return {
+          id: so.id,
+          orderNumber: `WS-${so.id.slice(0, 8)}`,
+          customerId: so.customer_id || '',
+          customerName: so.customer_name,
+          products: products,
+          totalAmount: so.total_amount,
+          totalCost: 0,
+          profit: 0,
+          cargoCost: 0,
+          salesChannel: 'website',
+          status: so.status || 'pending',
+          paymentStatus: 'paid', // Assuming web orders are paid
+          paymentMethod: 'Kredi Kartı',
+          shippingAddress: so.address,
+          createdAt: so.created_at,
+          updatedAt: so.created_at
+        };
+      });
+
+      if (useDatabase) {
+        // Upsert into our orders table
+        for (const order of newOrders) {
+          const dbOrder = {
+            order_number: order.orderNumber,
+            customer_id: null,
+            customer_name: order.customerName,
+            products: order.products,
+            total_amount: order.totalAmount,
+            total_cost: 0,
+            profit: 0,
+            cargo_cost: 0,
+            sales_channel: 'website',
+            status: order.status,
+            payment_status: order.paymentStatus,
+            payment_method: order.paymentMethod,
+            shipping_address: order.shippingAddress,
+            created_at: order.createdAt,
+            updated_at: order.updatedAt,
+            shipped_at: null,
+            delivered_at: null
+          };
+          await db.createOrder(dbOrder).catch(() => { }); // Simple catch for existing ones
+        }
+        // Reload orders
+        const updatedOrders = await db.getOrders();
+        // (Transformation logic repeated here or extracted)
+        setDbOrders(updatedOrders.map((o: any) => ({
+          id: o.id,
+          orderNumber: o.order_number,
+          customerId: o.customer_id,
+          customerName: o.customer_name || '',
+          products: o.products || [],
+          totalAmount: o.total_amount || 0,
+          totalCost: o.total_cost || 0,
+          profit: o.profit || 0,
+          cargo_cost: o.cargo_cost || 0,
+          salesChannel: o.sales_channel || 'direct',
+          status: o.status,
+          paymentStatus: o.payment_status,
+          paymentMethod: o.payment_method,
+          shippingAddress: o.shipping_address || '',
+          createdAt: o.created_at,
+          updatedAt: o.updated_at,
+          shippedAt: o.shipped_at || null,
+          deliveredAt: o.delivered_at || null
+        })));
+      } else {
+        setMockOrders(prev => [
+          ...newOrders
+            .filter((no: any) => !prev.some(p => p.id === no.id))
+            .map((no: any) => ({ ...no, shippedAt: null, deliveredAt: null })),
+          ...prev
+        ]);
+      }
+      alert(`${newOrders.length} sipariş başarıyla senkronize edildi.`);
+    } catch (error) {
+      console.error('Sync error:', error);
+      alert('Siparişler çekilirken bir hata oluştu.');
+    }
+  };
+
   if (loading) {
     return (
       <div style={{
@@ -231,6 +331,7 @@ function App() {
               <OrdersPage
                 orders={orders}
                 onUpdateOrder={handleUpdateOrder}
+                onSyncSiteOrders={handleSyncSiteOrders}
               />
             }
           />

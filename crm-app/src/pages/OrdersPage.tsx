@@ -30,9 +30,11 @@ import { SALES_CHANNELS } from '../data/excelData';
 interface OrdersPageProps {
     orders: any[];
     onUpdateOrder?: (order: any) => void;
+    onSyncSiteOrders?: () => void;
 }
 
-export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder }) => {
+export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder, onSyncSiteOrders }) => {
+    const [isSyncing, setIsSyncing] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedStatus, setSelectedStatus] = useState<string>('all');
     const [selectedChannel, setSelectedChannel] = useState<string>('all');
@@ -183,6 +185,10 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder })
                         <button className="btn btn-secondary">
                             <Download size={16} />
                             Excel
+                        </button>
+                        <button className="btn btn-secondary" onClick={onSyncSiteOrders}>
+                            <DollarSign size={16} />
+                            Web Siteden Çek
                         </button>
                         <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
                             <Plus size={16} />
