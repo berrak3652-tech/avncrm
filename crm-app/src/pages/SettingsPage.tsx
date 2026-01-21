@@ -105,7 +105,7 @@ const CompanySettings: React.FC = () => (
             </div>
         </div>
 
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() => alert('Şirket ayarları başarıyla kaydedildi.')}>
             <Save size={16} />
             Kaydet
         </button>
@@ -158,7 +158,7 @@ const UserSettings: React.FC = () => (
             <input type="tel" className="form-input" defaultValue="+90 5XX XXX XX XX" />
         </div>
 
-        <button className="btn btn-primary">
+        <button className="btn btn-primary" onClick={() => alert('Kullanıcı ayarları başarıyla kaydedildi.')}>
             <Save size={16} />
             Kaydet
         </button>
@@ -178,7 +178,7 @@ const NotificationSettings: React.FC = () => (
         </div>
 
         <div style={{ marginTop: '2rem' }}>
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" onClick={() => alert('Bildirim ayarları başarıyla kaydedildi.')}>
                 <Save size={16} />
                 Kaydet
             </button>
@@ -249,7 +249,7 @@ const SecuritySettings: React.FC = () => (
                 <label className="form-label">Yeni Şifre (Tekrar)</label>
                 <input type="password" className="form-input" />
             </div>
-            <button className="btn btn-primary">Şifreyi Güncelle</button>
+            <button className="btn btn-primary" onClick={() => alert('Şifreniz başarıyla güncellendi.')}>Şifreyi Güncelle</button>
         </div>
 
         <div className="card" style={{ padding: '1rem' }}>

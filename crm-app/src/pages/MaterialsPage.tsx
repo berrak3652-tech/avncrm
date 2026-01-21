@@ -23,6 +23,7 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
     const [currentPage, setCurrentPage] = useState(1);
+    const [showAddModal, setShowAddModal] = useState(false);
     const itemsPerPage = 20;
 
     const departments = useMemo(() => {
@@ -116,7 +117,7 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
                             <Download size={16} />
                             Excel
                         </button>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
                             <Plus size={16} />
                             Yeni Malzeme
                         </button>
@@ -220,6 +221,57 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
                     </div>
                 </div>
             </div>
+            {/* Add Material Modal */}
+            {showAddModal && (
+                <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+                    <div className="modal" style={{ maxWidth: '600px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Yeni Malzeme Ekle</h3>
+                            <button className="modal-close" onClick={() => setShowAddModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Malzeme Adı</label>
+                                <input type="text" className="form-input" placeholder="Malzeme Adı" />
+                            </div>
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Departman</label>
+                                    <select className="form-select">
+                                        {departments.filter(d => d !== 'all').map(dept => (
+                                            <option key={dept} value={dept}>{dept}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Birim</label>
+                                    <input type="text" className="form-input" placeholder="AD, M, KG..." />
+                                </div>
+                            </div>
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Birim Fiyat</label>
+                                    <input type="number" className="form-input" placeholder="0.00" />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Başlangıç Stoğu</label>
+                                    <input type="number" className="form-input" placeholder="0" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Malzeme başarıyla eklendi (Simülasyon)');
+                                setShowAddModal(false);
+                            }}>
+                                <Plus size={16} />
+                                Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

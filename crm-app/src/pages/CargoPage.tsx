@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Truck, Calculator, Edit2 } from 'lucide-react';
 import { formatCurrency } from '../utils/helpers';
 
@@ -14,6 +14,11 @@ interface CargoPageProps {
 }
 
 export const CargoPage: React.FC<CargoPageProps> = ({ cargoPrices }) => {
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [calcDesi, setCalcDesi] = useState(30);
+    const [calcQty, setCalcQty] = useState(1);
+    const [calcResult, setCalcResult] = useState<number | null>(null);
+
     const stats = useMemo(() => ({
         minPrice: Math.min(...cargoPrices.map(p => p.price)),
         maxPrice: Math.max(...cargoPrices.map(p => p.price)),
@@ -49,7 +54,7 @@ export const CargoPage: React.FC<CargoPageProps> = ({ cargoPrices }) => {
             <div className="card mb-6">
                 <div className="card-header">
                     <h3 className="card-title">Horoz Lojistik Kargo Fiyat Tablosu</h3>
-                    <button className="btn btn-primary btn-sm">
+                    <button className="btn btn-primary btn-sm" onClick={() => setShowEditModal(true)}>
                         <Edit2 size={16} />
                         Fiyatları Düzenle
                     </button>
@@ -92,13 +97,30 @@ export const CargoPage: React.FC<CargoPageProps> = ({ cargoPrices }) => {
                     <div>
                         <div className="form-group">
                             <label className="form-label">Ürün Desi</label>
-                            <input type="number" className="form-input" placeholder="Desi değeri girin" defaultValue={30} />
+                            <input
+                                type="number"
+                                className="form-input"
+                                placeholder="Desi değeri girin"
+                                value={calcDesi}
+                                onChange={(e) => setCalcDesi(Number(e.target.value))}
+                            />
                         </div>
                         <div className="form-group">
                             <label className="form-label">Adet</label>
-                            <input type="number" className="form-input" placeholder="Adet" defaultValue={1} />
+                            <input
+                                type="number"
+                                className="form-input"
+                                placeholder="Adet"
+                                value={calcQty}
+                                onChange={(e) => setCalcQty(Number(e.target.value))}
+                            />
                         </div>
-                        <button className="btn btn-primary" style={{ width: '100%' }}>
+                        <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => {
+                            // Simple calculation logic for simulation
+                            const sorted = [...cargoPrices].sort((a, b) => a.desi - b.desi);
+                            const priceItem = sorted.find(p => calcDesi <= p.desi) || sorted[sorted.length - 1];
+                            setCalcResult(priceItem.price * calcQty);
+                        }}>
                             <Calculator size={16} />
                             Hesapla
                         </button>
@@ -116,14 +138,44 @@ export const CargoPage: React.FC<CargoPageProps> = ({ cargoPrices }) => {
                             Tahmini Kargo Ücreti
                         </div>
                         <div style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--primary-400)' }}>
-                            {formatCurrency(282)}
+                            {calcResult !== null ? formatCurrency(calcResult) : '-'}
                         </div>
                         <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)', marginTop: '0.5rem' }}>
-                            30 desi için hesaplandı
+                            {calcDesi} desi ve {calcQty} adet için hesaplandı
                         </div>
                     </div>
                 </div>
             </div>
+            {/* Edit Prices Modal */}
+            {showEditModal && (
+                <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+                    <div className="modal" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Kargo Fiyatlarını Güncelle</h3>
+                            <button className="modal-close" onClick={() => setShowEditModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <p style={{ color: 'var(--gray-400)', marginBottom: '1rem' }}>
+                                Excel dosyasından gelen fiyat listesini buradan toplu olarak güncelleyebilirsiniz.
+                            </p>
+                            <div className="form-group">
+                                <label className="form-label">Tüm Fiyatlara Uygulanacak Artış (%)</label>
+                                <input type="number" className="form-input" placeholder="0" />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowEditModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Kargo fiyatları başarıyla güncellendi (Simülasyon)');
+                                setShowEditModal(false);
+                            }}>
+                                <Edit2 size={16} />
+                                Güncelle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

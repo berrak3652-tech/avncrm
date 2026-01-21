@@ -39,6 +39,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder })
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
     const itemsPerPage = 15;
 
     const stats = useMemo(() => ({
@@ -183,7 +184,7 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder })
                             <Download size={16} />
                             Excel
                         </button>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
                             <Plus size={16} />
                             Manuel Sipariş
                         </button>
@@ -442,6 +443,62 @@ export const OrdersPage: React.FC<OrdersPageProps> = ({ orders, onUpdateOrder })
                             <button className="btn btn-primary">
                                 <Truck size={16} />
                                 Kargoya Ver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Add Order Modal */}
+            {showAddModal && (
+                <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+                    <div className="modal" style={{ maxWidth: '700px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Manuel Sipariş Oluştur</h3>
+                            <button className="modal-close" onClick={() => setShowAddModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Müşteri Seçin</label>
+                                <input type="text" className="form-input" placeholder="Müşteri adı ara..." />
+                            </div>
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Satış Kanalı</label>
+                                    <select className="form-select">
+                                        {SALES_CHANNELS.map(channel => (
+                                            <option key={channel.id} value={channel.id}>{channel.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Ödeme Yöntemi</label>
+                                    <select className="form-select">
+                                        <option value="credit_card">Kredi Kartı</option>
+                                        <option value="bank_transfer">Havale/EFT</option>
+                                        <option value="cash_on_delivery">Kapıda Ödeme</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Ürün Ekleyin</label>
+                                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <input type="text" className="form-input" placeholder="Ürün ara..." />
+                                    <button className="btn btn-secondary">Ekle</button>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Teslimat Adresi</label>
+                                <textarea className="form-textarea" placeholder="Adres detayları..."></textarea>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Sipariş başarıyla oluşturuldu (Simülasyon)');
+                                setShowAddModal(false);
+                            }}>
+                                <Plus size={16} />
+                                Siparişi Oluştur
                             </button>
                         </div>
                     </div>

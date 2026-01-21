@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Calculator, Clock, Users, DollarSign, Edit2 } from 'lucide-react';
 import { formatCurrency } from '../utils/helpers';
 
@@ -17,6 +17,8 @@ interface LaborPageProps {
 }
 
 export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [hourlyWage, setHourlyWage] = useState(laborData[0]?.hourlyWage || 110);
     const stats = useMemo(() => ({
         totalProducts: laborData.length,
         avgPiecesPerPerson: laborData.reduce((sum, l) => sum + l.piecesPerPerson, 0) / laborData.length,
@@ -60,7 +62,7 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
             <div className="card">
                 <div className="card-header">
                     <h3 className="card-title">İşçilik Maliyetleri</h3>
-                    <button className="btn btn-primary btn-sm">
+                    <button className="btn btn-primary btn-sm" onClick={() => setShowEditModal(true)}>
                         <Edit2 size={16} />
                         Saat Ücretini Düzenle
                     </button>
@@ -113,6 +115,38 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
                     </table>
                 </div>
             </div>
+            {/* Edit Hourly Wage Modal */}
+            {showEditModal && (
+                <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+                    <div className="modal" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Saat Ücretini Güncelle</h3>
+                            <button className="modal-close" onClick={() => setShowEditModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Yeni Saat Ücreti (₺)</label>
+                                <input
+                                    type="number"
+                                    className="form-input"
+                                    value={hourlyWage}
+                                    onChange={(e) => setHourlyWage(Number(e.target.value))}
+                                />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowEditModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Saat ücreti başarıyla güncellendi (Simülasyon)');
+                                setShowEditModal(false);
+                            }}>
+                                <Edit2 size={16} />
+                                Güncelle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

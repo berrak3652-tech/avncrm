@@ -15,6 +15,7 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { formatCurrency, formatPercentage, searchFilter } from '../utils/helpers';
+import { PRODUCT_BOM } from '../data/excelData';
 
 interface ProductsPageProps {
     products: any[];
@@ -41,6 +42,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [activeTab, setActiveTab] = useState<'info' | 'bom'>('info');
     const itemsPerPage = 10;
 
     const filteredProducts = useMemo(() => {
@@ -136,7 +139,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                             <Download size={16} />
                             Excel
                         </button>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
                             <Plus size={16} />
                             Yeni Ürün
                         </button>
@@ -261,51 +264,187 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                 <div className="modal-overlay" onClick={() => setShowModal(false)}>
                     <div className="modal" style={{ maxWidth: '800px' }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h3 className="modal-title">{selectedProduct.name}</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <h3 className="modal-title">{selectedProduct.name}</h3>
+                                <div style={{ display: 'flex', gap: '1rem' }}>
+                                    <button
+                                        className={`tab-btn ${activeTab === 'info' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('info')}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            padding: '0.5rem 0',
+                                            color: activeTab === 'info' ? 'var(--primary-400)' : 'var(--gray-500)',
+                                            borderBottom: activeTab === 'info' ? '2px solid var(--primary-400)' : 'none',
+                                            cursor: 'pointer',
+                                            fontWeight: 500
+                                        }}
+                                    >
+                                        Genel Bilgiler
+                                    </button>
+                                    <button
+                                        className={`tab-btn ${activeTab === 'bom' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('bom')}
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            padding: '0.5rem 0',
+                                            color: activeTab === 'bom' ? 'var(--primary-400)' : 'var(--gray-500)',
+                                            borderBottom: activeTab === 'bom' ? '2px solid var(--primary-400)' : 'none',
+                                            cursor: 'pointer',
+                                            fontWeight: 500
+                                        }}
+                                    >
+                                        Ürün Reçetesi (BOM)
+                                    </button>
+                                </div>
+                            </div>
                             <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
                         </div>
                         <div className="modal-body">
-                            <div className="grid grid-2" style={{ gap: '2rem' }}>
-                                <div>
-                                    <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Ürün Bilgileri</h4>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                        <InfoRow label="Ürün Kodu" value={selectedProduct.id} />
-                                        <InfoRow label="Modül Adı" value={selectedProduct.moduleName} />
-                                        <InfoRow label="Kategori" value={selectedProduct.category} />
-                                        <InfoRow label="Desi" value={`${selectedProduct.desi} desi`} />
-                                        <InfoRow label="Stok" value={`${selectedProduct.stock} adet`} />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Maliyet Detayları</h4>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                                        <InfoRow label="Malzeme Maliyeti" value={formatCurrency(selectedProduct.materialCost)} />
-                                        <InfoRow label="İşçilik Maliyeti" value={formatCurrency(selectedProduct.laborCost)} />
-                                        <InfoRow label="Genel Gider" value={formatCurrency(selectedProduct.overheadCost)} />
-                                        <InfoRow label="İade Gideri" value={formatCurrency(selectedProduct.returnCost)} />
-                                        <InfoRow label="Kargo Maliyeti" value={formatCurrency(selectedProduct.cargoCost)} />
-                                        <div style={{ borderTop: '1px solid var(--dark-border)', paddingTop: '0.75rem' }}>
-                                            <InfoRow label="Toplam Maliyet" value={formatCurrency(selectedProduct.totalCost)} highlight />
+                            {activeTab === 'info' ? (
+                                <>
+                                    <div className="grid grid-2" style={{ gap: '2rem' }}>
+                                        <div>
+                                            <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Ürün Bilgileri</h4>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                                <InfoRow label="Ürün Kodu" value={selectedProduct.id} />
+                                                <InfoRow label="Modül Adı" value={selectedProduct.moduleName} />
+                                                <InfoRow label="Kategori" value={selectedProduct.category} />
+                                                <InfoRow label="Desi" value={`${selectedProduct.desi} desi`} />
+                                                <InfoRow label="Stok" value={`${selectedProduct.stock} adet`} />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Maliyet Detayları</h4>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                                <InfoRow label="Malzeme Maliyeti" value={formatCurrency(selectedProduct.materialCost)} />
+                                                <InfoRow label="İşçilik Maliyeti" value={formatCurrency(selectedProduct.laborCost)} />
+                                                <InfoRow label="Genel Gider" value={formatCurrency(selectedProduct.overheadCost)} />
+                                                <InfoRow label="İade Gideri" value={formatCurrency(selectedProduct.returnCost)} />
+                                                <InfoRow label="Kargo Maliyeti" value={formatCurrency(selectedProduct.cargoCost)} />
+                                                <div style={{ borderTop: '1px solid var(--dark-border)', paddingTop: '0.75rem' }}>
+                                                    <InfoRow label="Toplam Maliyet" value={formatCurrency(selectedProduct.totalCost)} highlight />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-                            <div style={{ marginTop: '2rem' }}>
-                                <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Satış Kanalları Fiyatları</h4>
-                                <div className="grid grid-4" style={{ gap: '1rem' }}>
-                                    <PriceCard channel="Trendyol" price={selectedProduct.salePrice} color="#F27A1A" />
-                                    <PriceCard channel="Hepsiburada" price={selectedProduct.hepsiburadaPrice} color="#FF6000" />
-                                    <PriceCard channel="Vivense" price={selectedProduct.vivensePrice} color="#00BCD4" />
-                                    <PriceCard channel="Koçtaş" price={selectedProduct.koctasPrice} color="#FF9800" />
+                                    <div style={{ marginTop: '2rem' }}>
+                                        <h4 style={{ marginBottom: '1rem', color: 'var(--gray-300)' }}>Satış Kanalları Fiyatları</h4>
+                                        <div className="grid grid-4" style={{ gap: '1rem' }}>
+                                            <PriceCard channel="Trendyol" price={selectedProduct.salePrice} color="#F27A1A" />
+                                            <PriceCard channel="Hepsiburada" price={selectedProduct.hepsiburadaPrice} color="#FF6000" />
+                                            <PriceCard channel="Vivense" price={selectedProduct.vivensePrice} color="#00BCD4" />
+                                            <PriceCard channel="Koçtaş" price={selectedProduct.koctasPrice} color="#FF9800" />
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="table-container" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                                    <table className="bom-table">
+                                        <thead>
+                                            <tr style={{ position: 'sticky', top: 0, background: 'var(--dark-surface)', zIndex: 1 }}>
+                                                <th>Kategori</th>
+                                                <th>Malzeme</th>
+                                                <th>Miktar</th>
+                                                <th>Birim</th>
+                                                <th style={{ textAlign: 'right' }}>Fiyat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {PRODUCT_BOM[selectedProduct.name] ? (
+                                                PRODUCT_BOM[selectedProduct.name].map((item, idx) => (
+                                                    <tr key={idx}>
+                                                        <td style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{item.category}</td>
+                                                        <td style={{ fontWeight: 500 }}>{item.material}</td>
+                                                        <td>{item.quantity}</td>
+                                                        <td>{item.unit}</td>
+                                                        <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatCurrency(item.price)}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray-500)' }}>
+                                                        Bu ürün için reçete verisi bulunamadı.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                        {PRODUCT_BOM[selectedProduct.name] && (
+                                            <tfoot style={{ position: 'sticky', bottom: 0, background: 'var(--dark-surface)', zIndex: 1 }}>
+                                                <tr>
+                                                    <td colSpan={4} style={{ fontWeight: 600, textAlign: 'right' }}>Toplam Malzeme Maliyeti:</td>
+                                                    <td style={{ textAlign: 'right', fontWeight: 700, color: 'var(--primary-400)' }}>
+                                                        {formatCurrency(PRODUCT_BOM[selectedProduct.name].reduce((sum, item) => sum + item.price, 0))}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        )}
+                                    </table>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Kapat</button>
                             <button className="btn btn-primary">
                                 <Edit2 size={16} />
                                 Düzenle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Add Product Modal */}
+            {showAddModal && (
+                <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+                    <div className="modal" style={{ maxWidth: '600px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Yeni Ürün Ekle</h3>
+                            <button className="modal-close" onClick={() => setShowAddModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Ürün Adı</label>
+                                    <input type="text" className="form-input" placeholder="Ürün Adı" />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Kategori</label>
+                                    <select className="form-select">
+                                        {categories.filter(c => c !== 'Tümü').map(cat => (
+                                            <option key={cat} value={cat}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Modül Adı</label>
+                                <input type="text" className="form-input" placeholder="Örn: Çalışma Masası" />
+                            </div>
+                            <div className="grid grid-3" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Desi</label>
+                                    <input type="number" className="form-input" placeholder="0" />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Stok</label>
+                                    <input type="number" className="form-input" placeholder="0" />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Satış Fiyatı</label>
+                                    <input type="number" className="form-input" placeholder="0.00" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Ürün başarıyla eklendi (Simülasyon)');
+                                setShowAddModal(false);
+                            }}>
+                                <Plus size={16} />
+                                Kaydet
                             </button>
                         </div>
                     </div>

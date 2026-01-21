@@ -17,7 +17,8 @@ import {
     Menu,
     X,
     ChevronDown,
-    LogOut
+    LogOut,
+    User
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -61,6 +62,7 @@ const navItems = [
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [notificationsOpen, setNotificationsOpen] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
     const location = useLocation();
 
     const getPageTitle = () => {
@@ -118,9 +120,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <header className="header">
                     <div className="header-left">
                         <button
-                            className="btn btn-ghost btn-icon"
+                            className="btn btn-ghost btn-icon mobile-menu-btn"
                             onClick={() => setSidebarOpen(!sidebarOpen)}
-                            style={{ display: 'none' }}
                         >
                             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
@@ -143,12 +144,30 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </button>
                         </div>
 
-                        <div className="user-menu">
+                        <div className="user-menu" onClick={() => setUserMenuOpen(!userMenuOpen)} style={{ cursor: 'pointer', position: 'relative' }}>
                             <div className="user-avatar">A</div>
                             <div className="user-info">
                                 <div className="user-name">Admin</div>
                                 <div className="user-role">Yönetici</div>
                             </div>
+                            {userMenuOpen && (
+                                <div className="card" style={{
+                                    position: 'absolute',
+                                    top: '100%',
+                                    right: 0,
+                                    width: '180px',
+                                    marginTop: '0.5rem',
+                                    padding: '0.5rem',
+                                    zIndex: 100
+                                }}>
+                                    <button className="nav-item" style={{ width: '100%' }} onClick={() => alert('Profil ayarları yakında...')}>
+                                        <User size={16} /> Profil
+                                    </button>
+                                    <button className="nav-item" style={{ width: '100%', color: 'var(--error)' }} onClick={() => alert('Çıkış yapılıyor...')}>
+                                        <LogOut size={16} /> Çıkış Yap
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </header>

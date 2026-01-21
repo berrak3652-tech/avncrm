@@ -355,7 +355,10 @@ export const CustomersPage: React.FC<CustomersPageProps> = ({ customers, onUpdat
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-secondary" onClick={() => setShowAddModal(false)}>İptal</button>
-                            <button className="btn btn-primary">
+                            <button className="btn btn-primary" onClick={() => {
+                                alert('Müşteri başarıyla kaydedildi (Simülasyon)');
+                                setShowAddModal(false);
+                            }}>
                                 <UserPlus size={16} />
                                 Kaydet
                             </button>
