@@ -3,7 +3,13 @@ import { createClient } from '@supabase/supabase-js';
 const siteSupabaseUrl = import.meta.env.VITE_SITE_SUPABASE_URL;
 const siteSupabaseAnonKey = import.meta.env.VITE_SITE_SUPABASE_ANON_KEY;
 
-export const siteSupabase = createClient(siteSupabaseUrl, siteSupabaseAnonKey);
+if (!siteSupabaseUrl || !siteSupabaseAnonKey) {
+    console.warn('VITE_SITE_SUPABASE_URL or VITE_SITE_SUPABASE_ANON_KEY is missing. Site sync features will be disabled.');
+}
+
+export const siteSupabase = (siteSupabaseUrl && siteSupabaseAnonKey)
+    ? createClient(siteSupabaseUrl, siteSupabaseAnonKey)
+    : null;
 
 export const siteDb = {
     // Get orders from website
