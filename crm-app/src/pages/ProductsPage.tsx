@@ -455,7 +455,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                                 setShowAddModal(false);
                             }}>
                                 <Plus size={16} />
-                                Kaydet
+                                Kaydet ve Kapat
                             </button>
                         </div>
                     </div>

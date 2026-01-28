@@ -89,6 +89,17 @@ export interface DbMaterial {
     updated_at: string;
 }
 
+export interface DbLabor {
+    id: string;
+    product_name: string;
+    module_name: string;
+    pieces_per_person: number;
+    hourly_wage: number;
+    total_labor: number;
+    created_at: string;
+    updated_at: string;
+}
+
 // Helper functions for database operations
 export const db = {
     // Customers
@@ -242,6 +253,45 @@ export const db = {
     async deleteMaterial(id: string) {
         const { error } = await supabase
             .from('materials')
+            .delete()
+            .eq('id', id);
+        if (error) throw error;
+    },
+
+    // Labor
+    async getLabor() {
+        const { data, error } = await supabase
+            .from('labor')
+            .select('*')
+            .order('product_name', { ascending: true });
+        if (error) throw error;
+        return data as DbLabor[];
+    },
+
+    async createLabor(labor: Omit<DbLabor, 'id' | 'created_at' | 'updated_at'>) {
+        const { data, error } = await supabase
+            .from('labor')
+            .insert(labor)
+            .select()
+            .single();
+        if (error) throw error;
+        return data as DbLabor;
+    },
+
+    async updateLabor(id: string, labor: Partial<DbLabor>) {
+        const { data, error } = await supabase
+            .from('labor')
+            .update({ ...labor, updated_at: new Date().toISOString() })
+            .eq('id', id)
+            .select()
+            .single();
+        if (error) throw error;
+        return data as DbLabor;
+    },
+
+    async deleteLabor(id: string) {
+        const { error } = await supabase
+            .from('labor')
             .delete()
             .eq('id', id);
         if (error) throw error;

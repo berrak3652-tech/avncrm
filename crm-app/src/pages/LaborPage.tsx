@@ -16,8 +16,11 @@ interface LaborPageProps {
     onUpdateLabor?: (labor: LaborItem) => void;
 }
 
-export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
-    const [showEditModal, setShowEditModal] = useState(false);
+export const LaborPage: React.FC<LaborPageProps> = ({ laborData, onUpdateLabor }) => {
+    const [showGlobalModal, setShowGlobalModal] = useState(false);
+    const [showItemModal, setShowItemModal] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<LaborItem | null>(null);
+    const [editForm, setEditForm] = useState<Partial<LaborItem>>({});
     const [hourlyWage, setHourlyWage] = useState(laborData[0]?.hourlyWage || 110);
     const stats = useMemo(() => ({
         totalProducts: laborData.length,
@@ -62,7 +65,7 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
             <div className="card">
                 <div className="card-header">
                     <h3 className="card-title">İşçilik Maliyetleri</h3>
-                    <button className="btn btn-primary btn-sm" onClick={() => setShowEditModal(true)}>
+                    <button className="btn btn-primary btn-sm" onClick={() => setShowGlobalModal(true)}>
                         <Edit2 size={16} />
                         Saat Ücretini Düzenle
                     </button>
@@ -105,7 +108,14 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
                                         {formatCurrency(labor.totalLabor)}
                                     </td>
                                     <td>
-                                        <button className="btn btn-ghost btn-icon">
+                                        <button
+                                            className="btn btn-ghost btn-icon"
+                                            onClick={() => {
+                                                setSelectedItem(labor);
+                                                setEditForm(labor);
+                                                setShowItemModal(true);
+                                            }}
+                                        >
                                             <Edit2 size={16} />
                                         </button>
                                     </td>
@@ -115,13 +125,13 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
                     </table>
                 </div>
             </div>
-            {/* Edit Hourly Wage Modal */}
-            {showEditModal && (
-                <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+            {/* Edit Hourly Wage Modal - Global */}
+            {showGlobalModal && (
+                <div className="modal-overlay" onClick={() => setShowGlobalModal(false)}>
                     <div className="modal" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3 className="modal-title">Saat Ücretini Güncelle</h3>
-                            <button className="modal-close" onClick={() => setShowEditModal(false)}>×</button>
+                            <button className="modal-close" onClick={() => setShowGlobalModal(false)}>×</button>
                         </div>
                         <div className="modal-body">
                             <div className="form-group">
@@ -133,15 +143,97 @@ export const LaborPage: React.FC<LaborPageProps> = ({ laborData }) => {
                                     onChange={(e) => setHourlyWage(Number(e.target.value))}
                                 />
                             </div>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--gray-500)', marginTop: '0.5rem' }}>
+                                Not: Bu işlem tüm ürünlerin saat ücretini ve toplam işçilik maliyetini güncelleyecektir.
+                            </p>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-secondary" onClick={() => setShowEditModal(false)}>İptal</button>
+                            <button className="btn btn-secondary" onClick={() => setShowGlobalModal(false)}>İptal</button>
                             <button className="btn btn-primary" onClick={() => {
-                                alert('Saat ücreti başarıyla güncellendi (Simülasyon)');
-                                setShowEditModal(false);
+                                if (onUpdateLabor) {
+                                    // Update all items with new wage
+                                    laborData.forEach(item => {
+                                        onUpdateLabor({
+                                            ...item,
+                                            hourlyWage: hourlyWage,
+                                            totalLabor: (hourlyWage / item.piecesPerPerson) * 9 // This is the existing calculation logic if 8 - 9 hours
+                                        });
+                                    });
+                                }
+                                alert('Tüm saat ücretleri güncellendi.');
+                                setShowGlobalModal(false);
                             }}>
                                 <Edit2 size={16} />
-                                Güncelle
+                                Tümünü Güncelle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Individual Labor Item Modal */}
+            {showItemModal && selectedItem && (
+                <div className="modal-overlay" onClick={() => setShowItemModal(false)}>
+                    <div className="modal" style={{ maxWidth: '450px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">İşçilik Detayı: {selectedItem.productName}</h3>
+                            <button className="modal-close" onClick={() => setShowItemModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Ürün Adı</label>
+                                <input type="text" className="form-input" value={editForm.productName || ''} readOnly style={{ opacity: 0.7 }} />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Bir Kişi Kaç Adet Yapar</label>
+                                <input
+                                    type="number"
+                                    className="form-input"
+                                    value={editForm.piecesPerPerson || 0}
+                                    onChange={(e) => {
+                                        const val = Number(e.target.value);
+                                        const wage = editForm.hourlyWage || 110;
+                                        setEditForm({
+                                            ...editForm,
+                                            piecesPerPerson: val,
+                                            totalLabor: val > 0 ? (wage * 9) / val : 0 // Using 9 as the multiplier based on Excel logic
+                                        });
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Saat Ücreti (₺)</label>
+                                <input
+                                    type="number"
+                                    className="form-input"
+                                    value={editForm.hourlyWage || 0}
+                                    onChange={(e) => {
+                                        const val = Number(e.target.value);
+                                        const pieces = editForm.piecesPerPerson || 1;
+                                        setEditForm({
+                                            ...editForm,
+                                            hourlyWage: val,
+                                            totalLabor: pieces > 0 ? (val * 9) / pieces : 0
+                                        });
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Toplam İşçilik Maliyeti (₺)</label>
+                                <input type="text" className="form-input" value={formatCurrency(editForm.totalLabor || 0)} readOnly style={{ background: 'var(--dark-bg)' }} />
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowItemModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                if (onUpdateLabor && selectedItem) {
+                                    onUpdateLabor({ ...selectedItem, ...editForm } as LaborItem);
+                                }
+                                alert('İşçilik verisi güncellendi.');
+                                setShowItemModal(false);
+                            }}>
+                                <Edit2 size={16} />
+                                Kaydet
                             </button>
                         </div>
                     </div>

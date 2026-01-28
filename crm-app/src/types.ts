@@ -119,6 +119,7 @@ export interface Material {
 // Cargo Price Interface
 export interface CargoPrice {
     id: string;
+    company: string;
     desi: number;
     price: number;
 }
@@ -131,6 +132,26 @@ export interface LaborData {
     piecesPerPerson: number;
     hourlyWage: number;
     totalLabor: number;
+}
+
+// Supply Product Interface
+export interface SupplyProduct {
+    code: string;
+    id: string;
+    name: string;
+    category: string;
+    brand: string;
+    price: number;
+    stock: number;
+    tax: number;
+    currency: string;
+    description: string;
+    images: string[];
+    cargoCost?: number;
+    returnCost?: number;
+    profitMargin?: number;
+    desi?: number;
+    cargoCompany?: string;
 }
 
 // Sales Channel Info Interface

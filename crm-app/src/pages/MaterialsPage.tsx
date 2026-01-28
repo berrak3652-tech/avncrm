@@ -9,7 +9,8 @@ import {
     Package,
     AlertTriangle,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Save
 } from 'lucide-react';
 import type { Material } from '../types';
 import { formatCurrency, searchFilter } from '../utils/helpers';
@@ -24,6 +25,9 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
     const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
     const [currentPage, setCurrentPage] = useState(1);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
+    const [editForm, setEditForm] = useState<Partial<Material>>({});
     const itemsPerPage = 20;
 
     const departments = useMemo(() => {
@@ -169,10 +173,25 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
                                     </td>
                                     <td>
                                         <div style={{ display: 'flex', gap: '0.25rem' }}>
-                                            <button className="btn btn-ghost btn-icon">
+                                            <button
+                                                className="btn btn-ghost btn-icon"
+                                                onClick={() => {
+                                                    setSelectedMaterial(material);
+                                                    setEditForm(material);
+                                                    setShowEditModal(true);
+                                                }}
+                                            >
                                                 <Edit2 size={16} />
                                             </button>
-                                            <button className="btn btn-ghost btn-icon" style={{ color: 'var(--error)' }}>
+                                            <button
+                                                className="btn btn-ghost btn-icon"
+                                                style={{ color: 'var(--error)' }}
+                                                onClick={() => {
+                                                    if (window.confirm(`${material.name} malzemesini silmek istediğinize emin misiniz?`)) {
+                                                        alert('Silme işlemi simüle edildi.');
+                                                    }
+                                                }}
+                                            >
                                                 <Trash2 size={16} />
                                             </button>
                                         </div>
@@ -221,6 +240,85 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ materials, onUpdat
                     </div>
                 </div>
             </div>
+            {/* Edit Material Modal */}
+            {showEditModal && selectedMaterial && (
+                <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+                    <div className="modal" style={{ maxWidth: '600px' }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title">Malzemeyi Düzenle</h3>
+                            <button className="modal-close" onClick={() => setShowEditModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label className="form-label">Malzeme Adı</label>
+                                <input
+                                    type="text"
+                                    className="form-input"
+                                    value={editForm.name || ''}
+                                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                                />
+                            </div>
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Departman</label>
+                                    <select
+                                        className="form-select"
+                                        value={editForm.usedIn || ''}
+                                        onChange={(e) => setEditForm({ ...editForm, usedIn: e.target.value })}
+                                    >
+                                        {departments.filter(d => d !== 'all').map(dept => (
+                                            <option key={dept} value={dept}>{dept}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Birim</label>
+                                    <input
+                                        type="text"
+                                        className="form-input"
+                                        value={editForm.unit || ''}
+                                        onChange={(e) => setEditForm({ ...editForm, unit: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-2" style={{ gap: '1rem' }}>
+                                <div className="form-group">
+                                    <label className="form-label">Birim Fiyat</label>
+                                    <input
+                                        type="number"
+                                        className="form-input"
+                                        value={editForm.unitPrice || 0}
+                                        onChange={(e) => setEditForm({ ...editForm, unitPrice: parseFloat(e.target.value) })}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="form-label">Mevcut Stok</label>
+                                    <input
+                                        type="number"
+                                        className="form-input"
+                                        value={editForm.stock || 0}
+                                        onChange={(e) => setEditForm({ ...editForm, stock: parseInt(e.target.value) })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={() => setShowEditModal(false)}>İptal</button>
+                            <button className="btn btn-primary" onClick={() => {
+                                if (onUpdateMaterial && selectedMaterial) {
+                                    onUpdateMaterial({ ...selectedMaterial, ...editForm } as Material);
+                                }
+                                alert('Değişiklikler başarıyla kaydedildi.');
+                                setShowEditModal(false);
+                            }}>
+                                <Save size={16} />
+                                Güncelle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Add Material Modal */}
             {showAddModal && (
                 <div className="modal-overlay" onClick={() => setShowAddModal(false)}>

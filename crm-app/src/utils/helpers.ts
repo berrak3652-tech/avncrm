@@ -165,6 +165,7 @@ export const convertToMaterials = () => {
 export const convertToCargoPrices = () => {
     return CARGO_PRICES_DATA.map((item, index) => ({
         id: `CGO-${String(index + 1).padStart(4, '0')}`,
+        company: item.company || 'Horoz Lojistik',
         desi: item.desi,
         price: item.price
     }));

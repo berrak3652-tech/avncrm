@@ -12,6 +12,8 @@ import { ReportsPage } from './pages/ReportsPage';
 import { ChannelsPage } from './pages/ChannelsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { BOMPage } from './pages/BOMPage';
+import { SuppliesPage } from './pages/SuppliesPage';
+import { SUPPLY_PRODUCTS_DATA } from './data/excelData';
 import { db } from './lib/supabase';
 import { siteDb } from './lib/siteSupabase';
 import {
@@ -29,14 +31,15 @@ function App() {
   const [dbProducts, setDbProducts] = useState<any[]>([]);
   const [dbOrders, setDbOrders] = useState<any[]>([]);
   const [dbMaterials, setDbMaterials] = useState<any[]>([]);
+  const [dbLabor, setDbLabor] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [useDatabase, setUseDatabase] = useState(true);
 
   // Fallback mock data
   const mockProducts = useMemo(() => convertToProducts(), []);
-  const mockMaterials = useMemo(() => convertToMaterials(), []);
-  const cargoPrices = useMemo(() => convertToCargoPrices(), []);
-  const laborData = useMemo(() => convertToLabor(), []);
+  const [mockMaterials, setMockMaterials] = useState(() => convertToMaterials());
+  const [mockLabor, setMockLabor] = useState(() => convertToLabor());
+  const [mockCargo, setMockCargo] = useState(() => convertToCargoPrices());
   const mockCustomers = useMemo(() => generateMockCustomers(), []);
   const [mockOrders, setMockOrders] = useState(() => generateMockOrders(mockProducts, mockCustomers));
 
@@ -46,11 +49,12 @@ function App() {
       try {
         setLoading(true);
 
-        const [customers, products, orders, materials] = await Promise.all([
+        const [customers, products, orders, materials, labor] = await Promise.all([
           db.getCustomers().catch(() => []),
           db.getProducts().catch(() => []),
           db.getOrders().catch(() => []),
-          db.getMaterials().catch(() => [])
+          db.getMaterials().catch(() => []),
+          db.getLabor().catch(() => [])
         ]);
 
         // Transform database data to match app format
@@ -133,13 +137,25 @@ function App() {
           updatedAt: m.updated_at
         }));
 
+        const transformedLabor = labor.map((l: any) => ({
+          id: l.id,
+          productName: l.product_name,
+          moduleName: l.module_name || '',
+          piecesPerPerson: l.pieces_per_person || 0,
+          hourlyWage: l.hourly_wage || 0,
+          totalLabor: l.total_labor || 0,
+          createdAt: l.created_at,
+          updatedAt: l.updated_at
+        }));
+
         setDbCustomers(transformedCustomers);
         setDbProducts(transformedProducts);
         setDbOrders(transformedOrders);
         setDbMaterials(transformedMaterials);
+        setDbLabor(transformedLabor);
 
         // Use database if we got data, otherwise use mock
-        setUseDatabase(customers.length > 0 || products.length > 0 || orders.length > 0);
+        setUseDatabase(customers.length > 0 || products.length > 0 || orders.length > 0 || labor.length > 0);
 
       } catch (error) {
         console.error('Error loading data from Supabase:', error);
@@ -157,6 +173,116 @@ function App() {
   const products = useDatabase && dbProducts.length > 0 ? dbProducts : mockProducts;
   const orders = useDatabase && dbOrders.length > 0 ? dbOrders : mockOrders;
   const materials = useDatabase && dbMaterials.length > 0 ? dbMaterials : mockMaterials;
+  const laborData = useDatabase && dbLabor.length > 0 ? dbLabor : mockLabor;
+  const [dbCargo, setDbCargo] = useState<any[]>([]);
+  const cargoPrices = useDatabase && dbCargo.length > 0 ? dbCargo : mockCargo; // Corrected cargoPrices mapping
+
+  const handleUpdateMaterial = async (updatedMaterial: any) => {
+    const isMock = typeof updatedMaterial.id === 'string' && updatedMaterial.id.startsWith('MAT-');
+    if (useDatabase && !isMock) {
+      try {
+        await db.updateMaterial(updatedMaterial.id, {
+          name: updatedMaterial.name,
+          used_in: updatedMaterial.usedIn,
+          unit: updatedMaterial.unit,
+          unit_price: updatedMaterial.unitPrice,
+          stock: updatedMaterial.stock
+        });
+        setDbMaterials(prev => prev.map(m => m.id === updatedMaterial.id ? updatedMaterial : m));
+      } catch (error) {
+        console.error('Error updating material:', error);
+      }
+    } else {
+      setMockMaterials(prev => prev.map(m => m.id === updatedMaterial.id ? updatedMaterial : m));
+    }
+  };
+
+  const handleUpdateAllCargoPrices = async (percentage: number, fixedAdd: number, company: string, setPrice?: number, thresholdConfig?: { threshold: number, basePrice: number, perDesi: number }) => {
+    const updateLogic = (p: any) => {
+      // 1. If threshold pricing is used (Highest priority)
+      if (thresholdConfig && thresholdConfig.basePrice > 0) {
+        if (p.desi <= thresholdConfig.threshold) {
+          return thresholdConfig.basePrice;
+        } else {
+          const extraDesi = p.desi - thresholdConfig.threshold;
+          return thresholdConfig.basePrice + (extraDesi * thresholdConfig.perDesi);
+        }
+      }
+
+      // 2. If global fixed price is set
+      if (setPrice && setPrice > 0) return setPrice;
+
+      // 3. Percentage or fixed addition to existing prices
+      let newPrice = p.price;
+      if (percentage !== 0) newPrice = newPrice * (1 + percentage / 100);
+      if (fixedAdd !== 0) newPrice = newPrice + fixedAdd;
+      return Number(newPrice.toFixed(2));
+    };
+
+    if (company.startsWith('NEW:')) {
+      const newName = company.replace('NEW:', '');
+      setMockCargo(prev => {
+        const sourceCompany = prev.find(p => p.company === 'Horoz Lojistik') ? 'Horoz Lojistik' : prev[0].company;
+        const template = prev.filter(p => p.company === sourceCompany);
+        const newPrices = template.map((p, i) => ({
+          ...p,
+          id: `CGO-NEW-${Date.now()}-${i}`,
+          company: newName,
+          price: p.price
+        }));
+        return [...prev, ...newPrices];
+      });
+      return;
+    }
+
+    if (useDatabase && dbCargo.length > 0) {
+      alert('Veritabanı güncelleme özelliği planlanıyor.');
+    } else {
+      setMockCargo(prev => prev.map(p => {
+        if (p.company === company) {
+          return { ...p, price: updateLogic(p) };
+        }
+        return p;
+      }));
+    }
+  };
+
+  const handleUpdateCargoPrice = (updatedPrice: any) => {
+    setMockCargo(prev => prev.map(p => p.id === updatedPrice.id ? updatedPrice : p));
+  };
+
+  const handleResetCargoPrices = (company: string) => {
+    // Get fresh data from original Excel source (via helpers)
+    const allOriginal = convertToCargoPrices();
+    const originalForCompany = allOriginal.filter(p => p.company === company);
+
+    if (originalForCompany.length > 0) {
+      setMockCargo(prev => [
+        ...prev.filter(p => p.company !== company),
+        ...originalForCompany
+      ]);
+    } else {
+      alert(`${company} firması orijinal Excel verilerinde bulunamadı.`);
+    }
+  };
+
+  const handleUpdateLabor = async (updatedLabor: any) => {
+    const isMock = typeof updatedLabor.id === 'string' && updatedLabor.id.startsWith('LBR-');
+    if (useDatabase && !isMock) {
+      try {
+        await db.updateLabor(updatedLabor.id, {
+          pieces_per_person: updatedLabor.piecesPerPerson,
+          hourly_wage: updatedLabor.hourlyWage,
+          total_labor: updatedLabor.totalLabor
+        });
+        setDbLabor(prev => prev.map(l => l.id === updatedLabor.id ? updatedLabor : l));
+      } catch (error) {
+        console.error('Error updating labor:', error);
+      }
+    } else {
+      setMockLabor(prev => prev.map(l => l.id === updatedLabor.id ? updatedLabor : l));
+    }
+  };
 
   const handleUpdateOrder = async (updatedOrder: any) => {
     if (useDatabase) {
@@ -175,6 +301,7 @@ function App() {
       setMockOrders(prev => prev.map(o => o.id === updatedOrder.id ? updatedOrder : o));
     }
   };
+
 
   const handleSyncSiteOrders = async () => {
     try {
@@ -377,15 +504,22 @@ function App() {
           />
           <Route
             path="/materials"
-            element={<MaterialsPage materials={materials} />}
+            element={<MaterialsPage materials={materials} onUpdateMaterial={handleUpdateMaterial} />}
           />
           <Route
             path="/cargo"
-            element={<CargoPage cargoPrices={cargoPrices} />}
+            element={
+              <CargoPage
+                cargoPrices={cargoPrices}
+                onUpdateAllPrices={handleUpdateAllCargoPrices}
+                onResetAllPrices={handleResetCargoPrices}
+                onUpdatePrice={handleUpdateCargoPrice}
+              />
+            }
           />
           <Route
             path="/labor"
-            element={<LaborPage laborData={laborData} />}
+            element={<LaborPage laborData={laborData} onUpdateLabor={handleUpdateLabor} />}
           />
           <Route
             path="/bom"
@@ -402,6 +536,10 @@ function App() {
           <Route
             path="/channels"
             element={<ChannelsPage orders={orders} />}
+          />
+          <Route
+            path="/supplies"
+            element={<SuppliesPage supplies={SUPPLY_PRODUCTS_DATA as any} />}
           />
           <Route
             path="/settings"

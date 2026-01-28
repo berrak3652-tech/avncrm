@@ -34,4 +34,4 @@ for sheet_name in xl.sheet_names:
 with open('excel_data.json', 'w', encoding='utf-8') as f:
     json.dump(all_data, f, ensure_ascii=False, indent=2, default=str)
 
-print('\n\nData saved to excel_data.json')
+print('\n\nVeriler başarıyla excel_data.json dosyasına kaydedildi.')

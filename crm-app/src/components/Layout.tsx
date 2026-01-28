@@ -32,6 +32,7 @@ const navItems = [
             { path: '/', icon: LayoutDashboard, label: 'Dashboard', badge: null },
             { path: '/orders', icon: ShoppingCart, label: 'Siparişler', badge: 12 },
             { path: '/products', icon: Package, label: 'Ürünler', badge: null },
+            { path: '/supplies', icon: Package, label: 'Tedarik Ürünleri', badge: null },
             { path: '/customers', icon: Users, label: 'Müşteriler', badge: null },
         ]
     },

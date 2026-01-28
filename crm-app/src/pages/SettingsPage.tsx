@@ -9,7 +9,8 @@ import {
     Database,
     Mail,
     Save,
-    Upload
+    Upload,
+    FileSpreadsheet
 } from 'lucide-react';
 
 export const SettingsPage: React.FC = () => {
@@ -338,6 +339,35 @@ const IntegrationSettings: React.FC = () => (
                 connected={true}
                 color="#3498DB"
             />
+            <div className="card" style={{ marginTop: '1rem', borderLeft: '3px solid #27AE60' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{ padding: '0.5rem', background: 'rgba(39, 174, 96, 0.1)', borderRadius: 'var(--radius)', color: '#27AE60' }}>
+                            <FileSpreadsheet size={24} />
+                        </div>
+                        <div>
+                            <div style={{ fontWeight: 600, color: 'var(--gray-200)' }}>Excel Veri Senkronizasyonu</div>
+                            <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>ÜRÜNLER MALİYET FİYAT.xlsx</div>
+                        </div>
+                    </div>
+                    <span className="badge badge-success">Sistem Güncel</span>
+                </div>
+                <p style={{ fontSize: '0.875rem', color: 'var(--gray-400)', marginBottom: '1rem' }}>
+                    Excel dosyasında yaptığınız değişiklikleri uygulamaya yansıtmak için terminalde aşağıdaki komutu çalıştırın:
+                </p>
+                <code style={{
+                    display: 'block',
+                    padding: '0.75rem',
+                    background: 'var(--dark-bg)',
+                    borderRadius: 'var(--radius)',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.8rem',
+                    color: 'var(--primary-300)',
+                    border: '1px solid var(--dark-border)'
+                }}>
+                    python sync_excel_to_app.py
+                </code>
+            </div>
         </div>
     </div>
 );

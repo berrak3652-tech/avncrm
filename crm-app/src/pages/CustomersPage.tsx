@@ -360,7 +360,7 @@ export const CustomersPage: React.FC<CustomersPageProps> = ({ customers, onUpdat
                                 setShowAddModal(false);
                             }}>
                                 <UserPlus size={16} />
-                                Kaydet
+                                Kaydet ve Kapat
                             </button>
                         </div>
                     </div>
