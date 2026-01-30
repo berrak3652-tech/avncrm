@@ -484,6 +484,7 @@ function App() {
             element={
               <ProductsPage
                 products={products}
+                materials={materials}
                 onSyncToSite={handleSyncProductToSite}
               />
             }
@@ -523,7 +524,7 @@ function App() {
           />
           <Route
             path="/bom"
-            element={<BOMPage products={products} />}
+            element={<BOMPage products={products} materials={materials} />}
           />
           <Route
             path="/reports"

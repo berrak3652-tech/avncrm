@@ -5,9 +5,10 @@ import { formatCurrency, searchFilter } from '../utils/helpers';
 
 interface BOMPageProps {
     products: any[];
+    materials: any[];
 }
 
-export const BOMPage: React.FC<BOMPageProps> = ({ products }) => {
+export const BOMPage: React.FC<BOMPageProps> = ({ products, materials }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedProducts, setExpandedProducts] = useState<Set<string>>(new Set());
 
@@ -59,7 +60,28 @@ export const BOMPage: React.FC<BOMPageProps> = ({ products }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {filteredProductNames.length > 0 ? (
                     filteredProductNames.map((productName) => {
-                        const bomItems = PRODUCT_BOM[productName];
+                        const rawBomItems = PRODUCT_BOM[productName];
+
+                        // Calculate dynamic prices based on current materials
+                        const bomItems = rawBomItems.map(item => {
+                            const foundMaterial = materials.find(m =>
+                                m.name.toLowerCase() === item.material.toLowerCase()
+                            );
+
+                            if (foundMaterial) {
+                                return {
+                                    ...item,
+                                    unitPrice: foundMaterial.unitPrice,
+                                    price: foundMaterial.unitPrice * item.quantity
+                                };
+                            }
+                            return {
+                                ...item,
+                                unitPrice: item.price / item.quantity,
+                                price: item.price
+                            };
+                        });
+
                         const isExpanded = expandedProducts.has(productName);
                         const totalCost = bomItems.reduce((sum, item) => sum + item.price, 0);
 
@@ -116,7 +138,8 @@ export const BOMPage: React.FC<BOMPageProps> = ({ products }) => {
                                                         <th>Malzeme Adı</th>
                                                         <th>Miktar</th>
                                                         <th>Birim</th>
-                                                        <th style={{ textAlign: 'right' }}>Fiyat (KDVSiz)</th>
+                                                        <th style={{ textAlign: 'right' }}>Birim Fiyat</th>
+                                                        <th style={{ textAlign: 'right' }}>Toplam Fiyat</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -124,8 +147,11 @@ export const BOMPage: React.FC<BOMPageProps> = ({ products }) => {
                                                         <tr key={idx}>
                                                             <td style={{ color: 'var(--gray-500)', fontSize: '0.8125rem' }}>{item.category}</td>
                                                             <td style={{ fontWeight: 500 }}>{item.material}</td>
-                                                            <td>{item.quantity}</td>
+                                                            <td>{item.quantity.toFixed(3)}</td>
                                                             <td>{item.unit}</td>
+                                                            <td style={{ textAlign: 'right', color: 'var(--gray-400)' }}>
+                                                                {formatCurrency(item.unitPrice)}
+                                                            </td>
                                                             <td style={{ textAlign: 'right', fontWeight: 600, color: 'var(--gray-300)' }}>
                                                                 {formatCurrency(item.price)}
                                                             </td>
@@ -134,7 +160,7 @@ export const BOMPage: React.FC<BOMPageProps> = ({ products }) => {
                                                 </tbody>
                                                 <tfoot>
                                                     <tr style={{ background: 'rgba(255,255,255,0.02)' }}>
-                                                        <td colSpan={4} style={{ textAlign: 'right', fontWeight: 600, padding: '1rem' }}>Genel Toplam:</td>
+                                                        <td colSpan={5} style={{ textAlign: 'right', fontWeight: 600, padding: '1rem' }}>Genel Toplam:</td>
                                                         <td style={{ textAlign: 'right', fontWeight: 700, color: 'var(--primary-400)', fontSize: '1.125rem', padding: '1rem' }}>
                                                             {formatCurrency(totalCost)}
                                                         </td>

@@ -19,6 +19,7 @@ import { PRODUCT_BOM } from '../data/excelData';
 
 interface ProductsPageProps {
     products: any[];
+    materials: any[];
     onUpdateProduct?: (product: any) => void;
     onDeleteProduct?: (id: string) => void;
     onSyncToSite?: (product: any) => void;
@@ -38,19 +39,52 @@ const categories = [
     'Diğer'
 ];
 
-export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdateProduct, onDeleteProduct, onSyncToSite }) => {
+export const ProductsPage: React.FC<ProductsPageProps> = ({ products, materials, onUpdateProduct, onDeleteProduct, onSyncToSite }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Tümü');
     const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+    const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [activeTab, setActiveTab] = useState<'info' | 'bom'>('info');
+
+    // Calculate dynamic products with updated material costs
+    const dynamicProducts = useMemo(() => {
+        return products.map(product => {
+            const bomItems = PRODUCT_BOM[product.name];
+            if (!bomItems) return product;
+
+            let calculatedMaterialCost = 0;
+            bomItems.forEach(item => {
+                const material = materials.find(m => m.name.toLowerCase() === item.material.toLowerCase());
+                const unitPrice = material ? material.unitPrice : (item.price / item.quantity);
+                calculatedMaterialCost += unitPrice * item.quantity;
+            });
+
+            const diff = calculatedMaterialCost - product.materialCost;
+            const updatedTotalCost = product.totalCost + diff;
+            const updatedProfit = product.salePrice - updatedTotalCost;
+            const updatedProfitMargin = product.salePrice > 0 ? updatedProfit / product.salePrice : 0;
+
+            return {
+                ...product,
+                materialCost: calculatedMaterialCost,
+                totalCost: updatedTotalCost,
+                profit: updatedProfit,
+                profitMargin: updatedProfitMargin
+            };
+        });
+    }, [products, materials]);
+
+    const selectedProduct = useMemo(() => {
+        return dynamicProducts.find(p => p.id === selectedProductId) || null;
+    }, [dynamicProducts, selectedProductId]);
+
     const itemsPerPage = 10;
 
     const filteredProducts = useMemo(() => {
-        let result = products;
+        let result = dynamicProducts;
 
         if (selectedCategory !== 'Tümü') {
             result = result.filter(p => p.category === selectedCategory);
@@ -205,7 +239,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                                         <div style={{ display: 'flex', gap: '0.25rem' }}>
                                             <button
                                                 className="btn btn-ghost btn-icon"
-                                                onClick={() => { setSelectedProduct(product); setShowModal(true); }}
+                                                onClick={() => { setSelectedProductId(product.id); setShowModal(true); }}
                                             >
                                                 <Eye size={16} />
                                             </button>
@@ -364,30 +398,38 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ products, onUpdatePr
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {PRODUCT_BOM[selectedProduct.name] ? (
-                                                PRODUCT_BOM[selectedProduct.name].map((item, idx) => (
-                                                    <tr key={idx}>
-                                                        <td style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{item.category}</td>
-                                                        <td style={{ fontWeight: 500 }}>{item.material}</td>
-                                                        <td>{item.quantity}</td>
-                                                        <td>{item.unit}</td>
-                                                        <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatCurrency(item.price)}</td>
+                                            {(() => {
+                                                const rawBom = PRODUCT_BOM[selectedProduct.name];
+                                                if (!rawBom) return (
+                                                    <tr>
+                                                        <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray-500)' }}>
+                                                            Bu ürün için reçete verisi bulunamadı.
+                                                        </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan={5} style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray-500)' }}>
-                                                        Bu ürün için reçete verisi bulunamadı.
-                                                    </td>
-                                                </tr>
-                                            )}
+                                                );
+
+                                                return rawBom.map((item, idx) => {
+                                                    const material = materials.find(m => m.name.toLowerCase() === item.material.toLowerCase());
+                                                    const currentPrice = material ? (material.unitPrice * item.quantity) : item.price;
+
+                                                    return (
+                                                        <tr key={idx}>
+                                                            <td style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{item.category}</td>
+                                                            <td style={{ fontWeight: 500 }}>{item.material}</td>
+                                                            <td>{item.quantity.toFixed(3)}</td>
+                                                            <td>{item.unit}</td>
+                                                            <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatCurrency(currentPrice)}</td>
+                                                        </tr>
+                                                    );
+                                                });
+                                            })()}
                                         </tbody>
                                         {PRODUCT_BOM[selectedProduct.name] && (
                                             <tfoot style={{ position: 'sticky', bottom: 0, background: 'var(--dark-surface)', zIndex: 1 }}>
                                                 <tr>
                                                     <td colSpan={4} style={{ fontWeight: 600, textAlign: 'right' }}>Toplam Malzeme Maliyeti:</td>
                                                     <td style={{ textAlign: 'right', fontWeight: 700, color: 'var(--primary-400)' }}>
-                                                        {formatCurrency(PRODUCT_BOM[selectedProduct.name].reduce((sum, item) => sum + item.price, 0))}
+                                                        {formatCurrency(selectedProduct.materialCost)}
                                                     </td>
                                                 </tr>
                                             </tfoot>
